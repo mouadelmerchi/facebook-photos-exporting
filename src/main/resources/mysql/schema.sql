@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS FacebookPhotosSecurityDB;
+
+USE FacebookPhotosSecurityDB;
+
+CREATE TABLE IF NOT EXISTS `Authority` (  
+  `id` INT NOT NULL AUTO_INCREMENT,  
+  `name` VARCHAR(50) NOT NULL,  
+  
+  CONSTRAINT PK_Authority PRIMARY KEY (`id`)  
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `User` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(50) NOT NULL,
+	`email` VARCHAR(50) NOT NULL,
+	`password` VARCHAR(100) NOT NULL,
+	`enabled` BOOLEAN NOT NULL,
+	`lastPasswordResetDate` TIMESTAMP NOT NULL,
+	
+    CONSTRAINT PK_User PRIMARY KEY (`id`),
+    CONSTRAINT AK_User UNIQUE(`username`),
+    CONSTRAINT AK_User UNIQUE(`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `User_Authority` (
+	`id` INT NOT NULL AUTO_INCREMENT, 
+	`idUser` INT NOT NULL,
+	`idAuthority` INT NOT NULL,
+    
+     CONSTRAINT PK_User_Authority PRIMARY KEY (`id`),
+     CONSTRAINT FK_User_Authority_User FOREIGN KEY(`idUser`)
+			REFERENCES User(`id`),
+	 CONSTRAINT FK_User_Authority_Authority FOREIGN KEY(`idAuthority`)
+			REFERENCES Authority(`id`)
+    
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

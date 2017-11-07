@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  contextPath: /
+jwt:
+  header: Authorization
+  secret: O//ps230mBKaxQzmYJA3BFJsg5BKlBjVYfh01S01+lY=
+  expiration: 604800
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+datasource:
+  nosql:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: test
+spring:
+  social:
+    facebook:
+      appId: 1969884773225638
+      appSecret: 39eb2c0251a92228b1e49df841e0f2b3
+---
+spring:
+  profiles: dev,default
+datasource:
+  info:
+    url: jdbc:h2:mem:FacebookPhotosSecurityDB;DB_CLOSE_DELAY=-1
+    username: SA
+    password:
+    driverClassName: org.h2.Driver
+    defaultSchema:
+    maxPoolSize: 10
+    hibernate:
+      hbm2ddl.method: create-drop
+      show_sql: true
+      format_sql: true
+      dialect: org.hibernate.dialect.H2Dialect
+---
+spring:
+  profiles: prod
+datasource:
+  info:
+    url: jdbc:mysql://localhost:3306/FacebookPhotosSecurityDB
+    username: root
+    password: 
+    driverClassName: com.mysql.jdbc.Driver
+    defaultSchema:
+    maxPoolSize: 20
+    hibernate:
+      hbm2ddl.method: update
+      show_sql: true
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect

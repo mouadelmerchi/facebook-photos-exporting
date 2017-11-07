@@ -1,0 +1,1 @@
+Before executing the application, you need install the database schema in MySQL Server using the provided 'schema.sql' script

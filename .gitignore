@@ -1,0 +1,15 @@
+# Compiled output
+dist/
+target/
+
+# Dependencies
+src/main/webapp/node_modules/
+src/main/webapp/src/app/**/*.js
+src/main/webapp/src/app/**/*.js.map
+src/main/webapp/src/main.js
+src/main/webapp/src/main.js.map
+
+# Eclipse IDE
+.project
+.classpath
+.settings/

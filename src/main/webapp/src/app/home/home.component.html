@@ -1,0 +1,119 @@
+<!-- Navigation Start -->
+<header>
+   <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-8 py-4">
+               <h4 class="text-white">About</h4>
+               <p class="text-muted">
+                  This is a small Facebook-powered web app. The goal of the app is to 
+                  let the user export his photos from Facebook.
+               </p>
+            </div>
+            <div class="col-sm-4 py-4">
+               <h4 class="text-white">Contact</h4>
+               <ul class="list-unstyled">
+                  <li>
+                     <a href="https://www.linkedin.com/in/mouad-merchichi-7b248b5b" class="text-white">LinkedIn</a>
+                  </li>
+                  <li>
+                     <a href="https://github.com/mouadelmerchi" class="text-white">Github</a>
+                  </li>
+                  <li>
+                     <a href="mailto:elmerchichi.mouad@gmail.com" class="text-white">Email me</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <nav class="navbar navbar-dark bg-dark">
+      <div class="container d-flex justify-content-between">
+         <a routerLink="/albums" routerLinkActive="active" class="navbar-brand">{{title}}</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+            aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <a [routerLink]="['/login']" class="power-off-icon">
+            <span class="oi oi-power-standby" title="Logout" aria-hidden="true"></span>
+         </a>
+      </div>
+   </nav>
+</header>
+<!-- Navigation End -->
+
+<section class="jumbotron text-center">
+   <div class="container">
+      <h1 class="jumbotron-heading">Albums</h1>
+      <p class="lead text-muted">
+         Something short and leading about the collection below—its contents, the creator,
+         etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.
+      </p>
+      <p>
+         <a href="#" class="btn btn-primary">Main call to action</a>
+         <a href="#" class="btn btn-secondary">Secondary action</a>
+      </p>
+   </div>
+</section>
+<div class="album text-muted">
+   <div class="container">
+      <div class="row">
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+         <div class="card">
+            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+               content. This content is a little bit longer.</p>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Footer Start -->
+<footer class="text-muted">
+   <div class="container">
+      <p class="float-right">
+         <a href="#">Back to top</a>
+      </p>
+      <p>Facebook Photos Exporting &copy; 2017</p>
+   </div>
+</footer>
+<!-- Footer End -->
