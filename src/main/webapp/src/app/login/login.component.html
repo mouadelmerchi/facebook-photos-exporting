@@ -18,21 +18,27 @@
                      </button>
                   </div>
                   <div class="card-body">
-                     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" autocomplete="off" novalidate>
+                     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" 
+                     [ngClass]="{ 'was-validated': f.submitted && f.form.invalid }"
+                     autocomplete="off" novalidate>
                         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
                            <label for="email">Email</label>
                            <input type="email" class="form-control form-control-lg rounded-0" name="email"
                               [(ngModel)]="model.email" #email="ngModel" required="required" />
-                           <div *ngIf="f.submitted && !email.valid" class="help-block text-danger">Invalid email
-                              address</div>
+                           <!-- <div *ngIf="f.submitted && !email.valid" class="help-block text-danger"> -->
+                           <div class="invalid-feedback">
+                              Please provide a valid email address
+                           </div>
                         </div>
                         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
                            <label for="password">Password</label>
                            <input type="password" class="form-control form-control-lg rounded-0" name="password"
                               [(ngModel)]="model.password" #password="ngModel" autocomplete="new-password"
                               required="required" />
-                           <div *ngIf="f.submitted && !password.valid" class="help-block text-danger">Password
-                              required</div>
+                           <!--<div *ngIf="f.submitted && !password.valid" class="help-block text-danger">-->
+                           <div class="invalid-feedback">
+                              Password required
+                           </div>
                         </div>
                         <div class="form-group">
                            <button [disabled]="loading" class="btn btn-primary btn-lg rounded-0">Login</button>
