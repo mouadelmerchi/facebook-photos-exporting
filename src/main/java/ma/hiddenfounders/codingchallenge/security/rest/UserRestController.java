@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.hiddenfounders.codingchallenge.security.jwt.JwtUser;
+import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
 import ma.hiddenfounders.codingchallenge.security.util.TokenUtil;
 
 @RestController
@@ -26,11 +26,11 @@ public class UserRestController {
    private UserDetailsService userDetailsService;
 
    @RequestMapping(value = "user", method = RequestMethod.GET)
-   public ResponseEntity<JwtUser> getAuthenticatedUser(HttpServletRequest request) {
+   public ResponseEntity<JwtUserDetails> getAuthenticatedUser(HttpServletRequest request) {
       // Exclude "Bearer " substring
       String token = request.getHeader(tokenHeader).substring(7);
       String email = tokenUtil.getEmailFromToken(token);
-      JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(email);
+      JwtUserDetails user = (JwtUserDetails) userDetailsService.loadUserByUsername(email);
       return ResponseEntity.ok(user);
    }
 }

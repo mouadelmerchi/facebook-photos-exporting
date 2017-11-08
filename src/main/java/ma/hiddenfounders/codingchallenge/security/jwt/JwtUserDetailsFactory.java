@@ -9,13 +9,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ma.hiddenfounders.codingchallenge.security.entity.Authority;
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 
-public class JwtUserFactory {
+public class JwtUserDetailsFactory {
 
-   private JwtUserFactory() {
+   private JwtUserDetailsFactory() {
    }
 
-   public static JwtUser create(User user) {
-       return new JwtUser(
+   public static JwtUserDetails create(User user) {
+       return new JwtUserDetails(
                user.getId(),
                user.getUsername(),
                user.getEmail(),

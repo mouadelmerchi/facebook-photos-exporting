@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.exception.UserNotEnabledException;
-import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserFactory;
+import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetailsFactory;
 import ma.hiddenfounders.codingchallenge.security.repository.UserRepository;
 
 /**
@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       } else if (!user.getEnabled()) {
          throw new UserNotEnabledException(String.format("User '%s' is disabled", email));
       } else {
-         return JwtUserFactory.create(user);
+         return JwtUserDetailsFactory.create(user);
       }
    }
 }

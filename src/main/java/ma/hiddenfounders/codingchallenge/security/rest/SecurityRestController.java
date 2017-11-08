@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.hiddenfounders.codingchallenge.security.jwt.JwtUser;
+import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationRequest;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationResponse;
 import ma.hiddenfounders.codingchallenge.security.util.SecurityUtils;
@@ -64,7 +64,7 @@ public class SecurityRestController {
          throws IOException {
       String token = request.getHeader(tokenHeader);
       String email = tokenUtil.getEmailFromToken(token);
-      JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(email);
+      JwtUserDetails user = (JwtUserDetails) userDetailsService.loadUserByUsername(email);
 
       if (tokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
          String refreshedToken = tokenUtil.refreshToken(token);

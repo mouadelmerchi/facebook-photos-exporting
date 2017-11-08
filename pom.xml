@@ -77,6 +77,12 @@
 			<version>0.9.0</version>
 		</dependency>
 
+		<!-- JSTL support -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
 		<!-- Test support -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -89,17 +95,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Mockito support -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.11.0</version><!--$NO-MVN-MAN-VER$ -->
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Apache Commons Lang -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.6</version>
-		</dependency>
-
-		<!-- JSTL support -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
 		</dependency>
 
 		<!-- Logging mechanism support -->

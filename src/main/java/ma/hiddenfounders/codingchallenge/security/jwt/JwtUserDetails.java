@@ -1,14 +1,14 @@
 package ma.hiddenfounders.codingchallenge.security.jwt;
 
+import java.time.Instant;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class JwtUser implements UserDetails {
+public class JwtUserDetails implements UserDetails {
 
    private static final long serialVersionUID = -3053132814966759634L;
 
@@ -18,10 +18,10 @@ public class JwtUser implements UserDetails {
    private final String                                 email;
    private final String                                 password;
    private final boolean                                enabled;
-   private final Date                                   lastPasswordResetDate;
+   private final Instant                                   lastPasswordResetDate;
    private final Collection<? extends GrantedAuthority> authorities;
 
-   public JwtUser(Long id, String username, String email, String password, boolean enabled, Date lastPasswordResetDate,
+   public JwtUserDetails(Long id, String username, String email, String password, boolean enabled, Instant lastPasswordResetDate,
          Collection<? extends GrantedAuthority> authorities) {
       this.id = id;
       this.username = username;
@@ -53,7 +53,7 @@ public class JwtUser implements UserDetails {
    }
 
    @JsonIgnore
-   public Date getLastPasswordResetDate() {
+   public Instant getLastPasswordResetDate() {
       return lastPasswordResetDate;
    }
 

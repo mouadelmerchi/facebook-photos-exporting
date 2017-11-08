@@ -1,10 +1,11 @@
 package ma.hiddenfounders.codingchallenge.security.entity;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,11 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+
+import ma.hiddenfounders.codingchallenge.common.InstantAttributeConverter;
 
 @Entity
 @Table(name = "User")
@@ -46,8 +47,8 @@ public class User {
    private Boolean enabled;
 
    @Column(name = "lastPasswordResetDate", nullable = false)
-   @Temporal(TemporalType.TIMESTAMP)
-   private Date lastPasswordResetDate;
+   @Convert(converter = InstantAttributeConverter.class)
+   private Instant lastPasswordResetDate;
 
    @ManyToMany(fetch = FetchType.EAGER)
    @JoinTable(name = "User_Authority", joinColumns = {
@@ -95,11 +96,11 @@ public class User {
       this.enabled = enabled;
    }
 
-   public Date getLastPasswordResetDate() {
+   public Instant getLastPasswordResetDate() {
       return lastPasswordResetDate;
    }
 
-   public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+   public void setLastPasswordResetDate(Instant lastPasswordResetDate) {
       this.lastPasswordResetDate = lastPasswordResetDate;
    }
 
