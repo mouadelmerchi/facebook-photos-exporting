@@ -18,34 +18,3 @@
 .card-header .mb-0 {
 	color: #fff;
 }
-
-.btn-primary {
-	color: #fff;
-	background-color: #456caa;
-	border-color: #456caa;
-}
-
-.btn-primary:hover {
-	color: #fff;
-	background-color: #2e4972;
-	border-color: #2e4972;
-}
-
-.btn-primary:focus, .btn-primary.focus {
-	color: #fff;
-	background-color: #456caa;
-	border-color: #3f639c;
-}
-
-.btn-primary:active {
-	color: #fff;
-	background-color: #456caa;
-	border-color: #3f639c;
-	background-image: none;
-}
-
-.btn-primary:active:hover, .btn-primary:active:focus {
-	color: #fff;
-	background-color: #3a5a8e;
-	border-color: #294064;
-}

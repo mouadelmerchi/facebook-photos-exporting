@@ -9,7 +9,7 @@ import { AppRoutingModule }  from './app-routing.module';
 import { AlertComponent }    from './directives/index';
 import { AuthGuard }         from './guards/index';
 
-import { AlertService, AuthenticationService } from './services/index';
+import { AlertService, AuthenticationService, UserService } from './services/index';
 
 import { HomeComponent }     from './home/index';
 import { LoginComponent }    from './login/index'; 
@@ -32,7 +32,8 @@ import { RegisterComponent } from './register/index';
     providers: [
         AuthGuard,
         AlertService,
-        AuthenticationService
+        AuthenticationService,
+        UserService
     ],
     bootstrap: [AppComponent]
 })

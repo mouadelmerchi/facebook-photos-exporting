@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -13,7 +13,7 @@ export class AuthenticationService {
     constructor(private http: Http) { }
 
     login(email: string, password: string): Observable<boolean> {
-        return this.http.post(this.authUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
+        return this.http.post(this.authUrl, JSON.stringify({ email: email, password: password }), new RequestOptions({ headers: this.headers }))
             .map((response: Response) => {
                 // login successful if there's a user in the response
                 let token = response.json() && response.json().token;
@@ -28,12 +28,6 @@ export class AuthenticationService {
                     return false;
                 }
             }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
-    getToken(): String {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        let token = currentUser && currentUser.token;
-        return token ? token : "";
     }
 
     logout(): void {

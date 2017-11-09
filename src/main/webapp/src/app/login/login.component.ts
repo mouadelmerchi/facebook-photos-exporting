@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
                    this.router.navigate([this.returnUrl]);
                 } else {
                     // login failed
-                    this.alertService.error('Email or password is incorrect');
+                    this.alertService.error('Error: Email or password is incorrect');
                     this.loading = false;
                 }
             }, error => {
