@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 import ma.hiddenfounders.codingchallenge.security.filter.AuthenticationTokenFilter;
 import ma.hiddenfounders.codingchallenge.security.handler.RestUnauthorizedEntryPoint;
@@ -54,17 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
        return new AuthenticationTokenFilter();
    }
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	   web
-         .ignoring()
-         .antMatchers("/WEB-INF/index.jsp",
-                      "/",
-                      "/src/**", 
-                      "/node_modules/**",
-                      "/error/**");
-	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -74,8 +61,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          .headers().disable()
          .csrf().disable()
          .authorizeRequests()
+            .antMatchers(
+                 HttpMethod.GET,
+                 "/",
+                 "/WEB-INF/*.jsp",
+                 "/**/favicon.ico",
+                 "/**/*.html",
+                 "/**/*.css",
+                 "/**/*.js",
+                 "/**/*.woff",
+                 "/**/*.ttf",
+                 "/**/*.otf",
+                 "/**/*.eot",
+                 "/**/*.svg"
+            ).permitAll()
             .antMatchers("/auth/**").permitAll()
-            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
          .anyRequest()
              .authenticated()
              .and()
@@ -84,13 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
              .accessDeniedHandler(restAccessDeniedHandler)
              .and()
           .sessionManagement()
-             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-             .and()
-         .logout()
-             .logoutUrl("/logout")
-             .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
-             .deleteCookies("JSESSIONID")
-             .permitAll();
+             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		 
 		// Custom JWT based security filter
 		 http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

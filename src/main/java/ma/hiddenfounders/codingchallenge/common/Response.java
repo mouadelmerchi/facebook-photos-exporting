@@ -2,22 +2,22 @@ package ma.hiddenfounders.codingchallenge.common;
 
 public class Response extends Message {
 
-   private int     code;
+   private int     status;
    private Message message;
    private Error   error;
 
-   public Response(int code, Message message, Error error) {
-      this.code = code;
+   public Response(int status, Message message, Error error) {
+      this.status = status;
       this.message = message;
       this.error = error;
    }
 
-   public int getCode() {
-      return code;
+   public int getStatus() {
+      return status;
    }
 
-   public void setCode(int code) {
-      this.code = code;
+   public void setStatus(int status) {
+      this.status = status;
    }
 
    public Message getMessage() {

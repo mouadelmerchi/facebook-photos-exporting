@@ -1,5 +1,7 @@
 package ma.hiddenfounders.codingchallenge.security.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,7 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Authority")
-public class Authority {
+public class Authority implements Serializable {
+
+   private static final long serialVersionUID = -1401999259679455032L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +24,13 @@ public class Authority {
    @Column(name = "name", nullable = false, length = 50)
    @Enumerated(EnumType.STRING)
    private AuthorityName name;
+
+   public Authority() {
+   }
+
+   public Authority(AuthorityName name) {
+      this.name = name;
+   }
 
    public Long getId() {
       return id;

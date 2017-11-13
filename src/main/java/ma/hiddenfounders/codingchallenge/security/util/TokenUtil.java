@@ -59,7 +59,8 @@ public class TokenUtil implements Serializable {
 
    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsProducer) {
       final Claims claims = getClaimsFromToken(token);
-      return claimsProducer.apply(claims);
+      T claim = (claims != null) ? claimsProducer.apply(claims) : null;
+      return claim;
    }
 
    private Claims getClaimsFromToken(String token) {

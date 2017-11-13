@@ -24,6 +24,6 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler, Serializabl
    @Override
    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception)
          throws IOException, ServletException {
-      SecurityUtils.sendError(response, exception, HttpServletResponse.SC_FORBIDDEN, "Not authorized resources");
+      SecurityUtils.sendError(response, exception, HttpServletResponse.SC_FORBIDDEN, "Access denied for the requested resources");
    }
 }

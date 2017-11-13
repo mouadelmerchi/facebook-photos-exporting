@@ -1,5 +1,6 @@
 package ma.hiddenfounders.codingchallenge.security.entity;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +16,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 
 import ma.hiddenfounders.codingchallenge.common.InstantAttributeConverter;
 
 @Entity
 @Table(name = "User")
-public class User {
+public class User implements Serializable {
+
+   private static final long serialVersionUID = 291221059568856254L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

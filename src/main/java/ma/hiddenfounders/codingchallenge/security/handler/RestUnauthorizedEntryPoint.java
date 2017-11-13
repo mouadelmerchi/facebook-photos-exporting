@@ -24,6 +24,7 @@ public class RestUnauthorizedEntryPoint implements AuthenticationEntryPoint, Ser
    @Override
    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
          throws IOException, ServletException {
-      SecurityUtils.sendError(response, exception, HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+      SecurityUtils.sendError(response, exception, HttpServletResponse.SC_UNAUTHORIZED,
+            "Authentication failed. Please provide valid credentials to log in.");
    }
 }

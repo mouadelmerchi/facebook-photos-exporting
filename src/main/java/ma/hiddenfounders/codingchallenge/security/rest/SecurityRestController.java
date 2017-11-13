@@ -8,21 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ma.hiddenfounders.codingchallenge.security.exception.InvalidTokenException;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationRequest;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationResponse;
+import ma.hiddenfounders.codingchallenge.security.util.AuthenticationUtil;
 import ma.hiddenfounders.codingchallenge.security.util.SecurityUtils;
 import ma.hiddenfounders.codingchallenge.security.util.TokenUtil;
 
@@ -34,7 +31,7 @@ public class SecurityRestController {
    private String tokenHeader;
 
    @Autowired
-   private AuthenticationManager authenticationManager;
+   private AuthenticationUtil authUtil;
 
    @Autowired
    private TokenUtil tokenUtil;
@@ -46,16 +43,9 @@ public class SecurityRestController {
    public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
          HttpServletResponse response, Device device) throws AuthenticationException, IOException {
 
-      // Perform the authentication
-      final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-            authenticationRequest.getEmail(), authenticationRequest.getPassword()));
-      SecurityContextHolder.getContext().setAuthentication(authentication);
+      String token = authUtil.authenticateAndGenerateToken(authenticationRequest.getEmail(),
+            authenticationRequest.getPassword(), device);
 
-      // Generate a token
-      final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-      final String token = tokenUtil.generateToken(userDetails, device);
-
-      // Return the token
       SecurityUtils.sendResponse(response, HttpServletResponse.SC_OK, new AuthenticationResponse(token));
    }
 
@@ -70,7 +60,8 @@ public class SecurityRestController {
          String refreshedToken = tokenUtil.refreshToken(token);
          SecurityUtils.sendResponse(response, HttpServletResponse.SC_OK, new AuthenticationResponse(refreshedToken));
       } else {
-         SecurityUtils.sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, null);
+         SecurityUtils.sendError(response, new InvalidTokenException("Invalid token value"),
+               HttpServletResponse.SC_BAD_REQUEST, "Please sign in to be able to access the requested resource.");
       }
    }
 }

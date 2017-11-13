@@ -18,11 +18,11 @@ public class JwtUserDetails implements UserDetails {
    private final String                                 email;
    private final String                                 password;
    private final boolean                                enabled;
-   private final Instant                                   lastPasswordResetDate;
+   private final Instant                                lastPasswordResetDate;
    private final Collection<? extends GrantedAuthority> authorities;
 
-   public JwtUserDetails(Long id, String username, String email, String password, boolean enabled, Instant lastPasswordResetDate,
-         Collection<? extends GrantedAuthority> authorities) {
+   public JwtUserDetails(Long id, String username, String email, String password, boolean enabled,
+         Instant lastPasswordResetDate, Collection<? extends GrantedAuthority> authorities) {
       this.id = id;
       this.username = username;
       this.email = email;
