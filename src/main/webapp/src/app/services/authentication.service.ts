@@ -1,25 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Injectable }                 from '@angular/core';
+import {
+    HttpClient,
+    HttpHeaders,
+    HttpErrorResponse
+}                                      from '@angular/common/http';
+
+import { Observable }                  from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+import { StorageService } from './storage.service';
+
+import { AuthenticationTokenResponse } from '../models/index';
+
 @Injectable()
 export class AuthenticationService {
     private authUrl: string = 'auth';
-    private headers = new Headers({ 'Content-Type': 'application/json' });
+    private refreshUrl: string = 'refresh';
+    private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    constructor(private http: Http) { }
+    constructor(private storage: StorageService, private http: HttpClient) { }
 
-    login(email: string, password: string): Observable<boolean> {
-        return this.http.post(this.authUrl, JSON.stringify({ email: email, password: password }), new RequestOptions({ headers: this.headers }))
-            .map((response: Response) => {
+    login(email: string, password: string): Observable<boolean | {}> {
+        return this.http.post<AuthenticationTokenResponse>(this.authUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
+            .map(data => {
                 // login successful if there's a user in the response
-                let token = response.json() && response.json().token;
+                let token = data.token;
                 if (token) {
                     // store user details in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ email: email, token: token }));
+                    this.storage.storeCurrentUser(JSON.stringify({ email: email, token: token }));
 
                     // return true to indicate successful login
                     return true;
@@ -27,11 +37,53 @@ export class AuthenticationService {
                     // return false to indicate failed login
                     return false;
                 }
-            }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            })
+            .catch(err => {
+                let errObj: any;
+                if (err.error instanceof Error) {
+                    // A client-side or network error occurred. Handle it accordingly.
+                    errObj = { status: 200, message: { body: 'Client side error occurred' }, error: { reason: 'Client Error', body: err.error.message } };
+                } else if (err instanceof HttpErrorResponse) {
+                    // The backend returned an unsuccessful response code.
+                    // The response body may contain clues as to what went wrong,
+                    errObj = err.error || { status: 500, message: { body: 'System unavailable' }, error: { reason: 'Error', body: 'Server error' } };
+                }
+                throw (errObj);
+            });
+    }
+
+    refreshToken(): Observable<boolean | {}> {
+        return this.http.get<AuthenticationTokenResponse>(this.refreshUrl)
+            .map(data => {
+                // login successful if there's a user in the response
+                let refreshedToken = data.token;
+                if (refreshedToken) {
+                    // get update current user's token
+                    this.storage.updateToken(refreshedToken);
+
+                    // return true to indicate successful login
+                    return true;
+                } else {
+                    // return false to indicate failed login
+                    return false;
+                }
+            })
+            .catch(err => {
+                let errObj: any;
+                if (err.error instanceof Error) {
+                    // A client-side or network error occurred. Handle it accordingly.
+                    errObj = { status: 200, message: { body: 'Client side error occurred' }, error: { reason: 'Client Error', body: err.error.message } };
+                } else if (err instanceof HttpErrorResponse) {
+                    // The backend returned an unsuccessful response code.
+                    // The response body may contain clues as to what went wrong,
+                    errObj = err.error || { status: 500, message: { body: 'System unavailable' }, error: { reason: 'Error', body: 'Server error' } };
+                }
+                throw (errObj);
+            });
     }
 
     logout(): void {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        this.storage.removeCurrentUser();
     }
 }

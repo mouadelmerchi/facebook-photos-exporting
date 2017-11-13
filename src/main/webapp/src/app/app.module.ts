@@ -1,37 +1,45 @@
-import { NgModule }       from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
-import { HttpModule }     from '@angular/http';
+import { NgModule }           from '@angular/core';
+import { BrowserModule }      from '@angular/platform-browser';
+import { FormsModule }        from '@angular/forms';
+import { HttpClientModule }   from '@angular/common/http';
+import { 
+    AppRoutingModule,
+    AppInterceptorModule 
+}                             from './modules/index';
 
-import { AppComponent }      from './app.component';
-import { AppRoutingModule }  from './app-routing.module';
+import { AuthGuard }          from './guards/index';
+import { AlertComponent }     from './directives/index';
+import {
+    AlertService,
+    StorageService,
+    AuthenticationService,
+    UserService
+}                             from './services/index';
 
-import { AlertComponent }    from './directives/index';
-import { AuthGuard }         from './guards/index';
-
-import { AlertService, AuthenticationService, UserService } from './services/index';
-
-import { HomeComponent }     from './home/index';
-import { LoginComponent }    from './login/index'; 
-import { RegisterComponent } from './register/index'; 
+import { AppComponent }       from './app.component';
+import { LoginComponent }     from './login/index';
+import { RegisterComponent }  from './register/index';
+import { HomeComponent }      from './home/index';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        HttpClientModule,
+        AppInterceptorModule
     ],
     declarations: [
         AppComponent,
-        AlertComponent,
-        HomeComponent,
+        AlertComponent, 
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        HomeComponent
     ],
     providers: [
         AuthGuard,
         AlertService,
+        StorageService,
         AuthenticationService,
         UserService
     ],

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { AlertService, UserService } from '../services/index';
+import { 
+    Component,
+    OnInit 
+}                   from '@angular/core';
+import { 
+    Router, 
+    ActivatedRoute
+}                   from '@angular/router';
+import { 
+    AlertService, 
+    UserService 
+}                   from '../services/index';
 
 @Component({
     moduleId: module.id,
@@ -35,9 +43,9 @@ export class RegisterComponent implements OnInit {
                     this.alertService.error('Authentication failed');
                     this.loading = false;
                 }
-            },
-            error => {
-                this.alertService.error(error.reason + ": " + error.body);
+            }, err => {
+                console.log("Status (" + err.status + ") => " + err.error.reason + ": " + err.error.body);
+                this.alertService.error(err.message.body);
                 this.loading = false;
             });
     }

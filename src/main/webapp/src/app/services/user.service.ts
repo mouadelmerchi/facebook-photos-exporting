@@ -1,29 +1,34 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Injectable }            from '@angular/core';
+import {
+    HttpClient,
+    HttpHeaders,
+    HttpErrorResponse
+}                                from '@angular/common/http';
+
+import { Observable }            from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { User } from '../models/index';
+import {
+    User,
+    AuthenticationTokenResponse
+}                                from '../models/index';
+
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class UserService {
-    constructor(private http: Http) { }
 
-    getById(id: number) {
-        return this.http.get('/auth/user/' + id, this.getRequestOptions())
-            .map((response: Response) => response.json())
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
-    }
+    constructor(private storage: StorageService, private http: HttpClient) { }
 
-    create(user: User) {
-        return this.http.post('/auth/user', user, this.getRequestOptions())
-            .map((response: Response) => {
+    create(user: User): Observable<boolean | {}> {
+        return this.http.post<AuthenticationTokenResponse>('/auth/user', user) // this.getAuthorizationHeaders()
+            .map(data => {
                 // user created and authenticated automatically
-                let token = response.json() && response.json().token;
+                let token = data.token;
                 if (token) {
-                    localStorage.setItem('currentUser', JSON.stringify({ email: user.email, token: token }));
+                     this.storage.storeCurrentUser(JSON.stringify({ email: user.email, token: token }));
 
                     // return true to indicate successful login
                     return true;
@@ -31,22 +36,24 @@ export class UserService {
                     // return false to indicate failed login
                     return false;
                 }
-            }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            })
+            .catch((err: any) => {
+                let errObj: any;
+                if (err.error instanceof Error) {
+                    // A client-side or network error occurred. Handle it accordingly.
+                    errObj = { status: 200, message: { body: 'Client side error occurred' }, error: { reason: 'Client Error', body: err.error.message } };
+                } else {
+                    // The backend returned an unsuccessful response code.
+                    // The response body may contain clues as to what went wrong,
+                    errObj = err.error || { status: 500, message: { body: 'System unavailable' }, error: { reason: 'Error', body: 'Server error' } };
+                }
+                throw(errObj);
+            });
     }
 
-    update(user: User) {
-        return this.http.put('/auth/user/' + user.id, user, this.getRequestOptions())
-            .map((response: Response) => response.json())
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
-    // private helper methods
-      private getRequestOptions() {
-        // create authorization header with jwt token
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
+    private getAuthorizationHeaders() {
+        return {
+            headers: new HttpHeaders().set('Authorization', `Bearer ${this.storage.getToken()}`)
+        };
     }
 }

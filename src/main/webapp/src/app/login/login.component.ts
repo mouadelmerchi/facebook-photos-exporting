@@ -1,7 +1,15 @@
-import { Component, OnInit }      from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { AlertService, AuthenticationService } from '../services/index';
+import { 
+    Component, 
+    OnInit 
+}                          from '@angular/core';
+import { 
+    Router, 
+    ActivatedRoute 
+}                          from '@angular/router';
+import { 
+    AlertService, 
+    AuthenticationService 
+}                          from '../services/index';
 
 @Component({
     moduleId: module.id,
@@ -40,8 +48,9 @@ export class LoginComponent implements OnInit {
                     this.alertService.error('Error: Email or password is incorrect');
                     this.loading = false;
                 }
-            }, error => {
-                this.alertService.error(error.reason + ": " + error.body);
+            }, err => {
+                console.log("Status (" + err.status + ") => " + err.error.reason + ": " + err.error.body);
+                this.alertService.error(err.message.body);
                 this.loading = false;
             });
     }

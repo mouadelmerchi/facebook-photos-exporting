@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" type="text/css" href="src/assets/vendor/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="src/assets/vendor/open-iconic/font/css/open-iconic-bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="src/assets/css/common-styles.css" />
 
 <!-- Polyfill(s) for older browsers -->
@@ -38,7 +38,11 @@
    <!-- App Content Start -->
    <main role="main"> 
       <facebook-photos-exporting>
-         <div id="preloader"></div>
+         <div class="loading">
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+         </div>
       </facebook-photos-exporting> 
    </main>
    <!-- App Content End -->
