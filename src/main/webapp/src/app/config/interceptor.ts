@@ -1,4 +1,4 @@
-import { Injectable, Injector }   from '@angular/core';
+import { Injectable }   from '@angular/core';
 import {
     HttpInterceptor,
     HttpEvent,
@@ -19,12 +19,10 @@ import { StorageService } from '../services/index';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private storage: StorageService, private injector: Injector) {
+    constructor(private storage: StorageService, private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-        const router = this.injector.get(Router);
 
         request = request.clone({
             setHeaders: {
@@ -47,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
                     if (err.status === 401) {
                         console.log("Status (" + err.status + ") => " + err.error.reason + ": " + err.error.body);
-                        router.navigate(['/login']);
+                        this.router.navigate(['/login']);
                         //                        authService.refreshToken()
                         //                            .subscribe(result => {
                         //                                if (result === true) {

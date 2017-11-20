@@ -30,8 +30,7 @@ body {
 }
 
 .album {
-	min-height: 50rem; /* Can be removed; just added for demo purposes */
-	padding-top: 3rem;
+	min-height: 30rem; /* Can be removed; just added for demo purposes */
 	padding-bottom: 3rem;
 	background-color: #f7f7f7;
 }
@@ -50,6 +49,19 @@ body {
 
 .album .card-text {
 	font-size: 85%;
+}
+
+.connection-form .form-info {
+	margin-bottom: 10px;
+}
+
+.album .no-albums-area {
+	background-image: url('/src/assets/img/no-albums.png');
+	background-repeat: no-repeat;
+	background-attachment: relative;
+	background-position: center;
+	width: 100%;
+	min-height: 30rem;
 }
 
 footer {

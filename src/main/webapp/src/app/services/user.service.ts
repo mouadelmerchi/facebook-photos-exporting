@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 
 import {
     User,
-    AuthenticationTokenResponse
+    AuthenticationToken
 }                                from '../models/index';
 
 import { StorageService } from './storage.service';
@@ -23,7 +23,7 @@ export class UserService {
     constructor(private storage: StorageService, private http: HttpClient) { }
 
     create(user: User): Observable<boolean | {}> {
-        return this.http.post<AuthenticationTokenResponse>('/auth/user', user) // this.getAuthorizationHeaders()
+        return this.http.post<AuthenticationToken>('/auth/user', user) // this.getAuthorizationHeaders()
             .map(data => {
                 // user created and authenticated automatically
                 let token = data.token;

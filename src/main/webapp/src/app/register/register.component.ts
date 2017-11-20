@@ -29,11 +29,11 @@ export class RegisterComponent implements OnInit {
         private alertService: AlertService
     ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    register() {
+    register(): void {
         this.loading = true;
         this.userService.create(this.model)
             .subscribe(result => {

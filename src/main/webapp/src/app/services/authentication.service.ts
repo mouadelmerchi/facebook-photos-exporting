@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 
 import { StorageService } from './storage.service';
 
-import { AuthenticationTokenResponse } from '../models/index';
+import { AuthenticationToken } from '../models/index';
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +23,7 @@ export class AuthenticationService {
     constructor(private storage: StorageService, private http: HttpClient) { }
 
     login(email: string, password: string): Observable<boolean | {}> {
-        return this.http.post<AuthenticationTokenResponse>(this.authUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
+        return this.http.post<AuthenticationToken>(this.authUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
             .map(data => {
                 // login successful if there's a user in the response
                 let token = data.token;
@@ -53,7 +53,7 @@ export class AuthenticationService {
     }
 
     refreshToken(): Observable<boolean | {}> {
-        return this.http.get<AuthenticationTokenResponse>(this.refreshUrl)
+        return this.http.get<AuthenticationToken>(this.refreshUrl)
             .map(data => {
                 // login successful if there's a user in the response
                 let refreshedToken = data.token;

@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.common;
+package ma.hiddenfounders.codingchallenge.common.util;
 
 import java.sql.Timestamp;
 import java.time.Instant;

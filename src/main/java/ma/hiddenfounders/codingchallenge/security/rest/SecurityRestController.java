@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ma.hiddenfounders.codingchallenge.security.dto.AuthenticationRequest;
+import ma.hiddenfounders.codingchallenge.security.dto.AuthenticationResponse;
 import ma.hiddenfounders.codingchallenge.security.exception.InvalidTokenException;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
-import ma.hiddenfounders.codingchallenge.security.util.AuthenticationRequest;
-import ma.hiddenfounders.codingchallenge.security.util.AuthenticationResponse;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationUtil;
 import ma.hiddenfounders.codingchallenge.security.util.SecurityUtils;
 import ma.hiddenfounders.codingchallenge.security.util.TokenUtil;

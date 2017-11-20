@@ -58,9 +58,9 @@ public final class SecurityUtils {
 
    public static void sendResponse(HttpServletResponse response, int status, Object object) throws IOException {
       response.setContentType("application/json;charset=UTF-8");
+      response.setStatus(status);
       PrintWriter writer = response.getWriter();
       writer.write(MAPPER.writeValueAsString(object));
-      response.setStatus(status);
       writer.flush();
       writer.close();
    }

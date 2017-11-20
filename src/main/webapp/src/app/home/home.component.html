@@ -5,10 +5,8 @@
          <div class="row">
             <div class="col-sm-8 py-4">
                <h4 class="text-white">About</h4>
-               <p class="text-muted">
-                  This is a small Facebook-powered web app. The goal of the app is to 
-                  let the user export his photos from Facebook.
-               </p>
+               <p class="text-muted">This is a small Facebook-powered web app. The goal of the app is to let you
+                  export your photos from your Facebook account.</p>
             </div>
             <div class="col-sm-4 py-4">
                <h4 class="text-white">Contact</h4>
@@ -29,7 +27,7 @@
    </div>
    <nav class="navbar navbar-dark bg-dark">
       <div class="container d-flex justify-content-between">
-         <a routerLink="/albums" routerLinkActive="active" class="navbar-brand">{{title}}</a>
+         <a routerLink="/" routerLinkActive="active" class="navbar-brand">Albums</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
             aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,77 +39,53 @@
    </nav>
 </header>
 <!-- Navigation End -->
-
 <section class="jumbotron text-center">
    <div class="container">
-      <h1 class="jumbotron-heading">Albums</h1>
-      <p class="lead text-muted">
-         Something short and leading about the collection below—its contents, the creator,
-         etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.
-      </p>
-      <p>
-         <a href="#" class="btn btn-primary">Main call to action</a>
-         <a href="#" class="btn btn-secondary">Secondary action</a>
-      </p>
+      <h1 class="jumbotron-heading">{{tuple?.title}}</h1>
+      <!-- IF NOT CONNECTED -->
+      <div class="connection-form" *ngIf="!tuple?.connected">
+         <form name="form" action="/connect/facebook" method="POST" ngNoForm>
+            <input type="hidden" name="scope" value="user_photos" />
+            <div class="form-info">
+               <p>You aren't connected to Facebook yet. Click the button to connect this application with your
+                  Facebook account.</p>
+            </div>
+            <div class="form-group">
+               <button type="submit" class="btn btn-lg btn-primary">
+                  <i class="fa fa-facebook" aria-hidden="true"
+                     style="padding-right: 10px; margin-right: 5px; border-right: 2px solid #fff"></i> Connect to
+                  Facebook
+               </button>
+            </div>
+         </form>
+      </div>
+      <!-- ELSE -->
+      <p *ngIf="tuple?.connected" class="lead text-muted">Something short and leading about the collection below—its
+         contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it
+         entirely.</p>
+      <!-- END IF -->
    </div>
 </section>
 <div class="album text-muted">
    <div class="container">
       <div class="row">
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
+         <div *ngFor="let album of tuple?.albums" class="card">
+            <a href="javascript:void(0)" (click)="onGetAlbumPhotos(album.id)">
+               <img src="{{album.coverPhotoUrl}}" style="background-color: #55595c; color: #eceeef;" alt="Card image cap" />
+            </a>
+            <p class="card-text">
+               {{album.name}}
+            </p>
          </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
-         <div class="card">
-            <img src="http://placehold.it/100x280?text=Thumbnail" style="background-color: #55595c;color: #eceeef;" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-               content. This content is a little bit longer.</p>
-         </div>
+         <div *ngIf='tuple?.albums.length === 0' class="no-albums-area"></div>
       </div>
    </div>
 </div>
-
 <!-- Footer Start -->
 <footer class="text-muted">
    <div class="container">
       <p class="float-right">
-        <a href="#0" class="to-top">Back to top</a>
+         <a href="#0" class="to-top">Back to top</a>
       </p>
       <p>Facebook Photos Exporting &copy; 2017</p>
    </div>

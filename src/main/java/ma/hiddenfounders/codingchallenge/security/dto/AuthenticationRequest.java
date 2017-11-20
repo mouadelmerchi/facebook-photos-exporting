@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.security.util;
+package ma.hiddenfounders.codingchallenge.security.dto;
 
 import java.io.Serializable;
 

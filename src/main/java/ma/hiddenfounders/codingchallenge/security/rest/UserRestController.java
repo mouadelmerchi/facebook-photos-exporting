@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ma.hiddenfounders.codingchallenge.security.dto.AuthenticationResponse;
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.exception.DuplicateUserException;
 import ma.hiddenfounders.codingchallenge.security.exception.InvalidUserInfoException;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
 import ma.hiddenfounders.codingchallenge.security.service.UserServiceImpl;
-import ma.hiddenfounders.codingchallenge.security.util.AuthenticationResponse;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationUtil;
 import ma.hiddenfounders.codingchallenge.security.util.SecurityUtils;
 import ma.hiddenfounders.codingchallenge.security.util.TokenUtil;

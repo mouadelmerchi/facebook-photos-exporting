@@ -18,7 +18,7 @@ import {
 })
 export class LoginComponent implements OnInit {
     model: any = { };
-    loading = false;
+    loading: boolean = false;
     returnUrl: string;
 
     constructor(
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService
     ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         // reset login status
         this.authenticationService.logout();
     
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    login() {
+    login(): void {
         this.loading = true;
         this.authenticationService.login(this.model.email, this.model.password)
             .subscribe(result => {

@@ -13,7 +13,8 @@ import {
     AlertService,
     StorageService,
     AuthenticationService,
-    UserService
+    UserService,
+    FacebookService
 }                             from './services/index';
 
 import { AppComponent }       from './app.component';
@@ -41,7 +42,8 @@ import { HomeComponent }      from './home/index';
         AlertService,
         StorageService,
         AuthenticationService,
-        UserService
+        UserService,
+        FacebookService
     ],
     bootstrap: [AppComponent]
 })

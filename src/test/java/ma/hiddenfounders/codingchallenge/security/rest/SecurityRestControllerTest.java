@@ -31,12 +31,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ma.hiddenfounders.codingchallenge.security.dto.AuthenticationRequest;
 import ma.hiddenfounders.codingchallenge.security.entity.Authority;
 import ma.hiddenfounders.codingchallenge.security.entity.AuthorityName;
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetailsFactory;
-import ma.hiddenfounders.codingchallenge.security.util.AuthenticationRequest;
 import ma.hiddenfounders.codingchallenge.security.util.TokenUtil;
 
 @RunWith(SpringRunner.class)

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
 @Configuration
@@ -21,7 +20,7 @@ public class MongoConfig {
    private Environment environment;
 
    @Bean
-   public Mongo mongo() throws Exception {
+   public MongoClient mongo() throws Exception {
       int port;
       try {
          port = Integer.parseInt(environment.getRequiredProperty(MONGO_DB_PORT_PROPERTY_NAME));
