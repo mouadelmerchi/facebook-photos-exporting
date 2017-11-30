@@ -8,7 +8,7 @@ import ma.hiddenfounders.codingchallenge.security.entity.AuthorityName;
 import ma.hiddenfounders.codingchallenge.security.repository.AuthorityRepository;
 
 @Service
-public class AuthorityServiceImpl implements AuthorityService {
+class AuthorityServiceImpl implements AuthorityService {
 
    @Autowired
    private AuthorityRepository authorityRepository;

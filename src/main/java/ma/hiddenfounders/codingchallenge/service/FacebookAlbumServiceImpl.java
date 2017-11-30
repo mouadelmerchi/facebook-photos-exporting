@@ -9,11 +9,16 @@ import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
 import ma.hiddenfounders.codingchallenge.repository.FacebookAlbumRepository;
 
 @Service
-public class FacebookAlbumServiceImpl implements FacebookAlbumService {
+class FacebookAlbumServiceImpl implements FacebookAlbumService {
 
    @Autowired
    private FacebookAlbumRepository fbAlbumRepository;
 
+   @Override
+   public long countAllFacebookAlbums() {
+      return fbAlbumRepository.count();
+   }
+   
    @Override
    public Page<FacebookAlbum> findAllFacebookAlbums(Pageable pageable) {
       return fbAlbumRepository.findAll(pageable);

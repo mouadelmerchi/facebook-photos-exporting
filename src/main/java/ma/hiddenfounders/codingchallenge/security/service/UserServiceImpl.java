@@ -17,7 +17,7 @@ import ma.hiddenfounders.codingchallenge.security.repository.UserRepository;
 import ma.hiddenfounders.codingchallenge.security.util.TimeProvider;
 
 @Service
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
    @Autowired
    private UserRepository userRepository;

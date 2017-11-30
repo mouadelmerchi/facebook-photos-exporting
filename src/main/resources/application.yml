@@ -20,6 +20,16 @@ spring:
     facebook:
       appId: 1969884773225638
       appSecret: 39eb2c0251a92228b1e49df841e0f2b3
+app:
+  facebook:
+    images:
+      path: /src/facebook/albums
+      extension: jpg
+    albums:
+      pageSize: 9
+    photos:
+      pageSize: 12
+    defaultPageSize: 25
 ---
 spring:
   profiles: dev,default

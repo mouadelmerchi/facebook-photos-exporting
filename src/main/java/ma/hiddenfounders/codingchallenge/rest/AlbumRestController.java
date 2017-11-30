@@ -2,6 +2,8 @@ package ma.hiddenfounders.codingchallenge.rest;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -17,26 +19,22 @@ import ma.hiddenfounders.codingchallenge.service.FacebookAlbumService;
 @RequestMapping("/api/facebook")
 public class AlbumRestController {
 
-   private static final int PAGE_SIZE = 9;
+   @Value("${app.facebook.albums.pageSize}")
+   private Integer albumsPageSize;
 
+   @Autowired
    private FacebookAlbumService fbAlbumService;
-
-   public AlbumRestController(FacebookAlbumService fbAlbumService) {
-      this.fbAlbumService = fbAlbumService;
-   }
 
    @RequestMapping(value = "/albums", method = RequestMethod.GET)
    public ResponseEntity<AlbumsListResponse> fetchUserAlbums() {
-
       int currentPage = 0;
-
-      Page<FacebookAlbum> albumsPage = fbAlbumService.findAllFacebookAlbums(PageRequest.of(currentPage, PAGE_SIZE));
+      Page<FacebookAlbum> albumsPage = fbAlbumService.findAllFacebookAlbums(PageRequest.of(currentPage, albumsPageSize));
+      
       if (!albumsPage.hasContent()) {
          return ResponseEntity.ok(null);
       }
-
       List<FacebookAlbum> albumsList = albumsPage.getContent();
 
-      return ResponseEntity.ok(new AlbumsListResponse(albumsList, currentPage, PAGE_SIZE));
+      return ResponseEntity.ok(new AlbumsListResponse(albumsList, currentPage, albumsPageSize));
    }
 }

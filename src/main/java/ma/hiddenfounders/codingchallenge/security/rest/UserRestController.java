@@ -20,7 +20,7 @@ import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.exception.DuplicateUserException;
 import ma.hiddenfounders.codingchallenge.security.exception.InvalidUserInfoException;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
-import ma.hiddenfounders.codingchallenge.security.service.UserServiceImpl;
+import ma.hiddenfounders.codingchallenge.security.service.UserService;
 import ma.hiddenfounders.codingchallenge.security.util.AuthenticationUtil;
 import ma.hiddenfounders.codingchallenge.security.util.SecurityUtils;
 import ma.hiddenfounders.codingchallenge.security.util.TokenUtil;
@@ -44,7 +44,7 @@ public class UserRestController {
    private UserDetailsService userDetailsService;
 
    @Autowired
-   private UserServiceImpl userService;
+   private UserService userService;
 
    @RequestMapping(value = "/auth/user", method = RequestMethod.GET)
    public void getAuthenticatedUser(HttpServletRequest request, HttpServletResponse response) throws IOException {

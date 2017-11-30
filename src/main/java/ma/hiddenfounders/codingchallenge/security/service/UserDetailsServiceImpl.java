@@ -17,7 +17,7 @@ import ma.hiddenfounders.codingchallenge.security.repository.UserRepository;
  * Authenticate a user from the database.
  */
 @Service("userDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService {
+class UserDetailsServiceImpl implements UserDetailsService {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsService.class);
 

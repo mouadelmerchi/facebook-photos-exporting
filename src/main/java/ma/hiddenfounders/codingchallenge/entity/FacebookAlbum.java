@@ -1,11 +1,16 @@
 package ma.hiddenfounders.codingchallenge.entity;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.social.facebook.api.PhotoReference;
 import org.springframework.social.facebook.api.Album.Type;
 
-@Document
-public class FacebookAlbum {
+@Document(collection = "facebookAlbum")
+public class FacebookAlbum implements Serializable {
+
+   private static final long serialVersionUID = -2686632635382032366L;
 
    @Id
    private String id;
@@ -14,7 +19,7 @@ public class FacebookAlbum {
 
    private int count;
 
-   private String coverPhoto;
+   private PhotoReference coverPhoto;
 
    private Type type;
 
@@ -25,7 +30,7 @@ public class FacebookAlbum {
       this(id, name, count, null, type);
    }
 
-   public FacebookAlbum(String id, String name, int count, String coverPhoto, Type type) {
+   public FacebookAlbum(String id, String name, int count, PhotoReference coverPhoto, Type type) {
       this.id = id;
       this.name = name;
       this.count = count;
@@ -57,11 +62,11 @@ public class FacebookAlbum {
       this.count = count;
    }
 
-   public String getCoverPhoto() {
+   public PhotoReference getCoverPhotoId() {
       return coverPhoto;
    }
 
-   public void setCoverPhoto(String coverPhoto) {
+   public void setCoverPhoto(PhotoReference coverPhoto) {
       this.coverPhoto = coverPhoto;
    }
 
@@ -75,7 +80,7 @@ public class FacebookAlbum {
 
    @Override
    public String toString() {
-      return "FacebookAlbum [id=" + id + ", name=" + name + ", count=" + count + ", coverPhoto=" + coverPhoto
+      return "FacebookAlbum [id=" + id + ", name=" + name + ", count=" + count + ", coverPhotoId=" + coverPhoto.getId()
             + ", type=" + type + "]";
    }
 }
