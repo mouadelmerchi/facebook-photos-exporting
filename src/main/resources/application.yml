@@ -20,10 +20,15 @@ spring:
     facebook:
       appId: 1969884773225638
       appSecret: 39eb2c0251a92228b1e49df841e0f2b3
+  session:
+    store-type: jdbc
+    jdbc: 
+      schema: classpath:org/springframework/session/jdbc/schema-h2.sql
+      table-name: SPRING_SESSION
 app:
   facebook:
     images:
-      path: /src/facebook/albums
+      path: facebook/media
       extension: jpg
     albums:
       pageSize: 9
@@ -33,8 +38,7 @@ app:
 ---
 spring:
   profiles: dev,default
-datasource:
-  info:
+  datasource:
     url: jdbc:h2:mem:FacebookPhotosSecurityDB;DB_CLOSE_DELAY=-1
     username: SA
     password:
@@ -49,8 +53,7 @@ datasource:
 ---
 spring:
   profiles: prod
-datasource:
-  info:
+  datasource: 
     url: jdbc:mysql://localhost:3306/FacebookPhotosSecurityDB
     username: root
     password: 

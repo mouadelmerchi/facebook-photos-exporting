@@ -3,33 +3,39 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class StorageService {
 
-    getCurrentUser(): string {
-        return localStorage.getItem('currentUser');
+    getCurrentUser(): any {
+        return JSON.parse(localStorage.getItem('currentUser'));
     }
 
-    storeCurrentUser(currentUser: string) {
-        localStorage.setItem('currentUser', currentUser);
+    storeCurrentUser(email: string, token: string): void {
+        localStorage.setItem('currentUser', JSON.stringify({ email: email, token: token }));
     }
 
     removeCurrentUser(): void {
         localStorage.removeItem('currentUser');
     }
 
-    getToken() {
-        let token: string = null;
-        let currentUser = JSON.parse(this.getCurrentUser());
-        if (currentUser && currentUser.token) {
-            token = currentUser.token;
+    getField(field: string): string {
+        let value: string = null;
+        let currentUser = this.getCurrentUser();
+        if (currentUser) {
+            switch (field.toLowerCase()) {
+                case "email":
+                    value = currentUser.email;
+                    break;
+                case "token":
+                    value = currentUser.token;
+                    break;
+            }
         }
-        return token;
+        return value;
     }
 
     // Does nothing if currentUser doesn't exist
     updateToken(refreshedToken: string): void {
         let currentUser = JSON.parse(this.getCurrentUser());
         if (currentUser) {
-            currentUser.token = refreshedToken;
-            this.storeCurrentUser(JSON.stringify(currentUser));
+            this.storeCurrentUser(currentUser.email, refreshedToken);
         }
     }
 }

@@ -19,14 +19,14 @@ import { StorageService } from '../services/index';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private storage: StorageService, private router: Router) {
+    constructor(private storageService: StorageService, private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         request = request.clone({
             setHeaders: {
-                Authorization: `Bearer ${this.storage.getToken()}`
+                Authorization: `Bearer ${this.storageService.getField("token")}`
             }
         });
 

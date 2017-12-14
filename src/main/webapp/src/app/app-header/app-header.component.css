@@ -1,0 +1,11 @@
+body {
+	min-height: 75rem; /* Can be removed; just added for demo purposes */
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+.navbar-dark a.power-off-icon {
+	color: #fff;
+}

@@ -7,9 +7,9 @@ import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
 
 public interface FacebookAlbumService {
 
-   long countAllFacebookAlbums();
+   long countFacebookAlbumsByOwner(String ownerEmail);
    
-   Page<FacebookAlbum> findAllFacebookAlbums(Pageable pageable);
+   Page<FacebookAlbum> findUserFacebookAlbums(FacebookAlbum probe, Pageable pageable);
    
    FacebookAlbum saveFacebookAlbum(FacebookAlbum album);
 }

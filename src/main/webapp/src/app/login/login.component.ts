@@ -17,7 +17,10 @@ import {
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    model: any = { };
+    model: any = {
+        email: "admin@admin.com",
+        password: "admin"    
+    };
     loading: boolean = false;
     returnUrl: string;
 

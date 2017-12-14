@@ -49,7 +49,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
       if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
          UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-
+         
          if (tokenUtil.validateToken(authToken, userDetails)) {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
                   null, userDetails.getAuthorities());

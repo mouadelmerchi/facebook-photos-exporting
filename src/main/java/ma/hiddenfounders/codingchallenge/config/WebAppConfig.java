@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
+import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -41,6 +42,11 @@ public class WebAppConfig implements WebMvcConfigurer {
        return new DeviceHandlerMethodArgumentResolver();
    }
    
+   @Bean
+   public AuthenticationPrincipalArgumentResolver authenticationPrincipalArgumentResolver() {
+      return new AuthenticationPrincipalArgumentResolver();
+   }
+   
    @Override
    public void configureViewResolvers(ViewResolverRegistry registry) {
       InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -64,6 +70,7 @@ public class WebAppConfig implements WebMvcConfigurer {
    @Override
    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
+       argumentResolvers.add(authenticationPrincipalArgumentResolver());
    }
 
    @Override

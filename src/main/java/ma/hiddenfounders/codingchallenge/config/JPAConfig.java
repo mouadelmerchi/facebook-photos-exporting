@@ -36,7 +36,7 @@ public class JPAConfig {
 
    @Bean
    @Primary
-   @ConfigurationProperties(prefix = "datasource.info")
+   @ConfigurationProperties(prefix = "spring.datasource")
    public DataSourceProperties dataSourceProperties() {
       return new DataSourceProperties();
    }
@@ -72,12 +72,12 @@ public class JPAConfig {
 
    private Properties hibernateProperties() {
       Properties properties = new Properties();
-      properties.put("hibernate.dialect", environment.getRequiredProperty("datasource.info.hibernate.dialect"));
-      properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("datasource.info.hibernate.hbm2ddl.method"));
-      properties.put("hibernate.show_sql", environment.getRequiredProperty("datasource.info.hibernate.show_sql"));
-      properties.put("hibernate.format_sql", environment.getRequiredProperty("datasource.info.hibernate.format_sql"));
-      if (StringUtils.isNotEmpty(environment.getRequiredProperty("datasource.info.defaultSchema"))) {
-         properties.put("hibernate.default_schema", environment.getRequiredProperty("datasource.info.defaultSchema"));
+      properties.put("hibernate.dialect", environment.getRequiredProperty("spring.datasource.hibernate.dialect"));
+      properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("spring.datasource.hibernate.hbm2ddl.method"));
+      properties.put("hibernate.show_sql", environment.getRequiredProperty("spring.datasource.hibernate.show_sql"));
+      properties.put("hibernate.format_sql", environment.getRequiredProperty("spring.datasource.hibernate.format_sql"));
+      if (StringUtils.isNotEmpty(environment.getRequiredProperty("spring.datasource.defaultSchema"))) {
+         properties.put("hibernate.default_schema", environment.getRequiredProperty("spring.datasource.defaultSchema"));
       }
 
       return properties;

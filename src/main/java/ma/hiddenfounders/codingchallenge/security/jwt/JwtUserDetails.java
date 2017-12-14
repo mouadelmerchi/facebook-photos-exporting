@@ -13,7 +13,6 @@ public class JwtUserDetails implements UserDetails {
    private static final long serialVersionUID = -3053132814966759634L;
 
    private final Long                                   id;
-   @SuppressWarnings("unused")
    private final String                                 username;
    private final String                                 email;
    private final String                                 password;
@@ -83,5 +82,10 @@ public class JwtUserDetails implements UserDetails {
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
       return authorities;
+   }
+
+   @Override
+   public String toString() {
+      return "JwtUserDetails [id=" + id + ", username=" + username + ", email=" + email + "]";
    }
 }

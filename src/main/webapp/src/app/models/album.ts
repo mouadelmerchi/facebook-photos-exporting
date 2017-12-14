@@ -2,7 +2,7 @@ export class Album {
     id: string;
     name: string;
     count: number;
-    coverPhoto: string;
+    coverPhotoUri: string;
     type: string;
 }
 

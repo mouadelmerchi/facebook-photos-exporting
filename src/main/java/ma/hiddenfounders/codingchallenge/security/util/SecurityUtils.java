@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,27 +23,31 @@ import ma.hiddenfounders.codingchallenge.common.Response;
  */
 public final class SecurityUtils {
 
+   private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
+   
    private static final ObjectMapper MAPPER = new ObjectMapper();
 
    private SecurityUtils() {
    }
 
-   public static String getCurrentUsername() {
+   public static String getCurrentUserEmail() {
       SecurityContext securityContext = SecurityContextHolder.getContext();
       Authentication authentication = securityContext.getAuthentication();
       UserDetails springSecurityUser = null;
-      String userName = null;
+      String email = null;
 
       if (authentication != null) {
+         LOGGER.info("Authentication principal: {}", authentication.getPrincipal());
          if (authentication.getPrincipal() instanceof UserDetails) {
             springSecurityUser = (UserDetails) authentication.getPrincipal();
-            userName = springSecurityUser.getUsername();
+            email = springSecurityUser.getUsername();
          } else if (authentication.getPrincipal() instanceof String) {
-            userName = (String) authentication.getPrincipal();
+            email = (String) authentication.getPrincipal();
          }
+         System.out.println("####### " + email + " ########");
       }
 
-      return userName;
+      return email;
    }
 
    public static void sendError(HttpServletResponse response, Exception exception, int status, String message)

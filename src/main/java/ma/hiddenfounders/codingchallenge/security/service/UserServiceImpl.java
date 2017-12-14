@@ -31,6 +31,10 @@ class UserServiceImpl implements UserService {
    @Autowired
    private TimeProvider timeProvider;
 
+   public User findUserById(Long id) {
+      return userRepository.getOne(id);
+   }
+   
    @Override
    public User findUserByEmailOrUsername(String email, String username) {
       return userRepository.findByEmailOrUsername(email, username);

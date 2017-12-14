@@ -1,0 +1,41 @@
+<!-- Navigation Start -->
+<header>
+   <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-8 py-4">
+               <h4 class="text-white">About</h4>
+               <p class="text-muted">This is a small Facebook-powered web app. The goal of the app is to let you
+                  export your photos from your Facebook account.</p>
+            </div>
+            <div class="col-sm-4 py-4">
+               <h4 class="text-white">Contact</h4>
+               <ul class="list-unstyled">
+                  <li>
+                     <a href="https://www.linkedin.com/in/mouad-merchichi-7b248b5b" class="text-white">LinkedIn</a>
+                  </li>
+                  <li>
+                     <a href="https://github.com/mouadelmerchi" class="text-white">Github</a>
+                  </li>
+                  <li>
+                     <a href="mailto:elmerchichi.mouad@gmail.com" class="text-white">Email me</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <nav class="navbar navbar-dark bg-dark">
+      <div class="container d-flex justify-content-between">
+         <a routerLink="/" routerLinkActive="active" class="navbar-brand">Albums</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+            aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <a [routerLink]="['/login']" class="power-off-icon">
+            <span class="oi oi-power-standby" title="Logout" aria-hidden="true"></span>
+         </a>
+      </div>
+   </nav>
+</header>
+<!-- Navigation End -->

@@ -15,12 +15,12 @@ import {
     AuthenticationToken
 }                                from '../models/index';
 
-import { StorageService } from './storage.service';
+import { StorageService }        from './storage.service';
 
 @Injectable()
 export class UserService {
 
-    constructor(private storage: StorageService, private http: HttpClient) { }
+    constructor(private storageService: StorageService, private http: HttpClient) { }
 
     create(user: User): Observable<boolean | {}> {
         return this.http.post<AuthenticationToken>('/auth/user', user) // this.getAuthorizationHeaders()
@@ -28,7 +28,7 @@ export class UserService {
                 // user created and authenticated automatically
                 let token = data.token;
                 if (token) {
-                     this.storage.storeCurrentUser(JSON.stringify({ email: user.email, token: token }));
+                     this.storageService.storeCurrentUser(user.email, token);
 
                     // return true to indicate successful login
                     return true;
@@ -53,7 +53,7 @@ export class UserService {
 
     private getAuthorizationHeaders() {
         return {
-            headers: new HttpHeaders().set('Authorization', `Bearer ${this.storage.getToken()}`)
+            headers: new HttpHeaders().set('Authorization', `Bearer ${this.storageService.getField("token")}`)
         };
     }
 }

@@ -23,19 +23,22 @@ public class FacebookAlbum implements Serializable {
 
    private Type type;
 
+   private String owner;
+
    public FacebookAlbum() {
    }
 
-   public FacebookAlbum(String id, String name, int count, Type type) {
-      this(id, name, count, null, type);
+   public FacebookAlbum(String id, String name, int count, Type type, String owner) {
+      this(id, name, count, null, type, owner);
    }
 
-   public FacebookAlbum(String id, String name, int count, PhotoReference coverPhoto, Type type) {
+   public FacebookAlbum(String id, String name, int count, PhotoReference coverPhoto, Type type, String owner) {
       this.id = id;
       this.name = name;
       this.count = count;
       this.coverPhoto = coverPhoto;
       this.type = type;
+      this.owner = owner;
    }
 
    public String getId() {
@@ -62,7 +65,7 @@ public class FacebookAlbum implements Serializable {
       this.count = count;
    }
 
-   public PhotoReference getCoverPhotoId() {
+   public PhotoReference getCoverPhoto() {
       return coverPhoto;
    }
 
@@ -78,9 +81,17 @@ public class FacebookAlbum implements Serializable {
       this.type = type;
    }
 
+   public String getOwner() {
+      return owner;
+   }
+
+   public void setOwner(String owner) {
+      this.owner = owner;
+   }
+
    @Override
    public String toString() {
-      return "FacebookAlbum [id=" + id + ", name=" + name + ", count=" + count + ", coverPhotoId=" + coverPhoto.getId()
-            + ", type=" + type + "]";
+      return "FacebookAlbum [id=" + id + ", name=" + name + ", count=" + count + ", coverPhoto=" + coverPhoto
+            + ", type=" + type + ", owner=" + owner + "]";
    }
 }

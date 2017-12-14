@@ -1,6 +1,7 @@
 package ma.hiddenfounders.codingchallenge.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,13 @@ class FacebookAlbumServiceImpl implements FacebookAlbumService {
    private FacebookAlbumRepository fbAlbumRepository;
 
    @Override
-   public long countAllFacebookAlbums() {
-      return fbAlbumRepository.count();
+   public long countFacebookAlbumsByOwner(String ownerEmail) {
+      return fbAlbumRepository.countByOwner(ownerEmail);
    }
-   
+
    @Override
-   public Page<FacebookAlbum> findAllFacebookAlbums(Pageable pageable) {
-      return fbAlbumRepository.findAll(pageable);
+   public Page<FacebookAlbum> findUserFacebookAlbums(FacebookAlbum probe, Pageable pageable) {
+      return fbAlbumRepository.findAll(Example.of(probe), pageable);
    }
 
    @Override

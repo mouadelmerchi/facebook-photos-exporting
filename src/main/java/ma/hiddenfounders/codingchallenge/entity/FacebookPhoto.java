@@ -6,7 +6,6 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.social.facebook.api.Reference;
 
 @Document(collection = "facebookPhoto")
 public class FacebookPhoto implements Serializable {
@@ -17,12 +16,13 @@ public class FacebookPhoto implements Serializable {
 
    private String name;
 
-   private Reference album;
+   private FacebookAlbumReference album;
 
    @Transient
    private byte[] photoBytes;
 
-   @Transient
+   private String imageKey;
+
    private String filename;
 
    private Date createdTime;
@@ -31,8 +31,11 @@ public class FacebookPhoto implements Serializable {
 
    private int height;
 
-   public FacebookPhoto(String id, String name, Reference album, byte[] photoBytes, Date createdTime, int width,
-         int height, String fbImgPath, String fbImgExt) {
+   public FacebookPhoto() {
+   }
+
+   public FacebookPhoto(String id, String name, FacebookAlbumReference album, byte[] photoBytes, Date createdTime,
+         int width, int height, String imageKey, String fbImgExt) {
       this.id = id;
       this.name = name;
       this.album = album;
@@ -40,11 +43,12 @@ public class FacebookPhoto implements Serializable {
       this.createdTime = createdTime;
       this.width = width;
       this.height = height;
-      
+      this.imageKey = imageKey;
+
       String albumId = this.album.getId();
       String albumName = this.album.getName();
-      String albumTitle = ((StringUtils.isNotBlank(albumName) && StringUtils.isAlphanumericSpace(albumName)) ? albumName : albumId);
-      this.filename = String.format("%s/%s/a.%s.p.%s.%s", fbImgPath, albumTitle, albumId, getId(), fbImgExt);
+      albumName = ((StringUtils.isNotBlank(albumName) && StringUtils.isAlphanumericSpace(albumName)) ? albumName : albumId);
+      this.filename = String.format("%s/a.%s.p.%s.%s", albumName, albumId, getId(), fbImgExt);
    }
 
    public String getId() {
@@ -63,15 +67,27 @@ public class FacebookPhoto implements Serializable {
       this.name = name;
    }
 
+   public String getImageKey() {
+      return imageKey;
+   }
+
+   public void setImageKey(String imageKey) {
+      this.imageKey = imageKey;
+   }
+
    public String getFilename() {
       return filename;
    }
 
-   public Reference getAlbum() {
+   public void setFilename(String filename) {
+      this.filename = filename;
+   }
+
+   public FacebookAlbumReference getAlbum() {
       return album;
    }
 
-   public void setAlbum(Reference album) {
+   public void setAlbum(FacebookAlbumReference album) {
       this.album = album;
    }
 

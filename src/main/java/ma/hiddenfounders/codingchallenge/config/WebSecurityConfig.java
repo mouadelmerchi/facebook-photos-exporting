@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          .authorizeRequests()
             .antMatchers(HttpMethod.GET, 
                   "/", 
-                  "/WEB-INF/*.jsp", 
+                  "/WEB-INF/index.jsp", 
                   "/**/favicon.ico", 
                   "/**/*.html", 
                   "/**/*.css",
@@ -84,18 +84,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   "/**/*.otf", 
                   "/**/*.eot", 
                   "/**/*.svg").permitAll()
-               .antMatchers("/auth/**").permitAll()
-               .antMatchers("/connect/**").permitAll()
-               .antMatchers("/facebook/**").permitAll()
-            .anyRequest()
-               .authenticated()
-               .and()
-            .exceptionHandling()
-               .authenticationEntryPoint(authenticationEntryPoint)
-               .accessDeniedHandler(restAccessDeniedHandler)
-               .and()
-            .sessionManagement()
-               .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .antMatchers("/auth/**").permitAll()
+            .antMatchers("/connect/**").permitAll()
+         .anyRequest()
+            .authenticated()
+            .and()
+         .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint)
+            .accessDeniedHandler(restAccessDeniedHandler)
+            .and()
+         .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
       // Custom JWT based security filter
       http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

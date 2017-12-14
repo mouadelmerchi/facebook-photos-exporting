@@ -2,9 +2,9 @@ import { NgModule }           from '@angular/core';
 import { BrowserModule }      from '@angular/platform-browser';
 import { FormsModule }        from '@angular/forms';
 import { HttpClientModule }   from '@angular/common/http';
-import { 
+import {
     AppRoutingModule,
-    AppInterceptorModule 
+    AppInterceptorModule
 }                             from './modules/index';
 
 import { AuthGuard }          from './guards/index';
@@ -20,6 +20,8 @@ import {
 import { AppComponent }       from './app.component';
 import { LoginComponent }     from './login/index';
 import { RegisterComponent }  from './register/index';
+import { AppHeaderComponent } from './app-header/index';
+import { AppFooterComponent } from './app-footer/index';
 import { HomeComponent }      from './home/index';
 
 @NgModule({
@@ -32,9 +34,11 @@ import { HomeComponent }      from './home/index';
     ],
     declarations: [
         AppComponent,
-        AlertComponent, 
+        AlertComponent,
         LoginComponent,
         RegisterComponent,
+        AppHeaderComponent,
+        AppFooterComponent,
         HomeComponent
     ],
     providers: [

@@ -1,7 +1,7 @@
 import { Injectable }                 from '@angular/core';
 import {
     HttpClient,
-    HttpHeaders,
+    HttpResponse,
     HttpErrorResponse
 }                                      from '@angular/common/http';
 
@@ -14,13 +14,16 @@ import { AlbumsListResponse }          from '../models/index';
 
 @Injectable()
 export class FacebookService {
-    private fbConnectionUrl = "/connect/facebook";
+    private fbConnectionUrl = "/api/connect/facebook";
     private fbAlbumsUrl: string = '/api/facebook/albums';
-    private headers = new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8');
 
     constructor(private http: HttpClient) { }
     
-    getAlbums(): Observable<{}> {
+    connect(): Observable<HttpResponse<string>> {
+        return this.http.post<string>(this.fbConnectionUrl, null, {observe: 'response'});
+    }
+    
+    getAlbums(): Observable<any> {
         return this.http.get<AlbumsListResponse>(this.fbAlbumsUrl)
             .map(data => {
                 let tuple: any = {

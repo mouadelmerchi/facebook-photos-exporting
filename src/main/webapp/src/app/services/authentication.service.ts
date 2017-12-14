@@ -20,7 +20,7 @@ export class AuthenticationService {
     private refreshUrl: string = 'refresh';
     private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    constructor(private storage: StorageService, private http: HttpClient) { }
+    constructor(private storageService: StorageService, private http: HttpClient) { }
 
     login(email: string, password: string): Observable<boolean | {}> {
         return this.http.post<AuthenticationToken>(this.authUrl, JSON.stringify({ email: email, password: password }), { headers: this.headers })
@@ -29,7 +29,7 @@ export class AuthenticationService {
                 let token = data.token;
                 if (token) {
                     // store user details in local storage to keep user logged in between page refreshes
-                    this.storage.storeCurrentUser(JSON.stringify({ email: email, token: token }));
+                    this.storageService.storeCurrentUser(email, token);
 
                     // return true to indicate successful login
                     return true;
@@ -59,7 +59,7 @@ export class AuthenticationService {
                 let refreshedToken = data.token;
                 if (refreshedToken) {
                     // get update current user's token
-                    this.storage.updateToken(refreshedToken);
+                    this.storageService.updateToken(refreshedToken);
 
                     // return true to indicate successful login
                     return true;
@@ -84,6 +84,6 @@ export class AuthenticationService {
 
     logout(): void {
         // remove user from local storage to log user out
-        this.storage.removeCurrentUser();
+        this.storageService.removeCurrentUser();
     }
 }
