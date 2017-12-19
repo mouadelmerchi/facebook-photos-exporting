@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router }            from '@angular/router';
 
-import { StorageService, 
-         FacebookService 
+import { StorageService,
+         FacebookService
 }                            from '../services/index';
 
 @Component({
@@ -13,17 +12,15 @@ import { StorageService,
 export class HomeComponent implements OnInit {
     tuple: any;
     userEmail: string;
-    
-    constructor(private storageService: StorageService, 
-                private facebookService: FacebookService, 
-                private router: Router) { }
+
+    constructor(private storageService: StorageService,
+        private facebookService: FacebookService) { }
 
     ngOnInit(): void {
         this.userEmail = this.storageService.getField("email");
         this.facebookService.getAlbums()
             .subscribe(result => {
                 this.tuple = result;
-                console.log(this.tuple);
                 for (let i in this.tuple.albums) {
                     if (!this.tuple.albums[i].coverPhotoUri) {
                         this.tuple.albums[i].coverPhotoUri = "/src/assets/img/default-cover.png";
@@ -32,24 +29,5 @@ export class HomeComponent implements OnInit {
             }, err => {
                 console.log("Status (" + err.status + ") => " + err.error.reason + ": " + err.error.body);
             });
-    }
-
-    connectToFacebook(): void {
-        this.facebookService.connect()
-            .subscribe(response => {
-                let location = response.headers.get('Location');
-                console.log("New location: " + location);
-                this.redirect(location);
-            });
-    }
-
-    onGetAlbumPhotos(albumId: number): void {
-
-    }
-
-    private redirect(location: string): void {
-        if (location) {
-            window.location.href = location;
-        }
     }
 }

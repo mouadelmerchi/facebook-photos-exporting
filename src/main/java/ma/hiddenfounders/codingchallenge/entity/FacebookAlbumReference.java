@@ -13,6 +13,10 @@ public class FacebookAlbumReference extends Reference {
       this(null, null, null);
    }
 
+   public FacebookAlbumReference(String id) {
+      this(id, null, null);
+   }
+   
    public FacebookAlbumReference(String id, String owner) {
       this(id, null, owner);
    }

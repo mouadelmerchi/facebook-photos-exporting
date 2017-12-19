@@ -1,0 +1,19 @@
+<app-header></app-header>
+<section class="jumbotron text-center">
+   <div class="container">
+      <h1 class="jumbotron-heading">{{tuple?.albumName}}</h1>
+   </div>
+</section>
+<div class="album text-muted">
+   <div class="container">
+      <div class="row">
+         <div *ngFor="let photo of tuple?.photos" class="card">
+            <a href="javascript:void(0)" (click)="showPhoto(photo.imageKey)">
+               <photo-details [photoUri]='photo.photoUri'></photo-details>
+            </a>
+         </div>
+         <div *ngIf='tuple?.photos.length === 0' class="no-content-area"></div>
+      </div>
+   </div>
+</div>
+<app-footer></app-footer>

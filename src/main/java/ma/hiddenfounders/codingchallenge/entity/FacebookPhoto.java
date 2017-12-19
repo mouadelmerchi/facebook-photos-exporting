@@ -25,11 +25,13 @@ public class FacebookPhoto implements Serializable {
 
    private String filename;
 
+   private String thumbnailFilename;
+
    private Date createdTime;
 
-   private int width;
+   private Integer width;
 
-   private int height;
+   private Integer height;
 
    public FacebookPhoto() {
    }
@@ -47,8 +49,10 @@ public class FacebookPhoto implements Serializable {
 
       String albumId = this.album.getId();
       String albumName = this.album.getName();
-      albumName = ((StringUtils.isNotBlank(albumName) && StringUtils.isAlphanumericSpace(albumName)) ? albumName : albumId);
+      albumName = ((StringUtils.isNotBlank(albumName) && StringUtils.isAlphanumericSpace(albumName)) ? albumName
+            : albumId);
       this.filename = String.format("%s/a.%s.p.%s.%s", albumName, albumId, getId(), fbImgExt);
+      this.thumbnailFilename = String.format("%s/a.%s.p.%s.thumbnail.%s", albumName, albumId, getId(), fbImgExt);
    }
 
    public String getId() {
@@ -83,6 +87,14 @@ public class FacebookPhoto implements Serializable {
       this.filename = filename;
    }
 
+   public String getThumbnailFilename() {
+      return thumbnailFilename;
+   }
+
+   public void setThumbnailFilename(String thumbnailFilename) {
+      this.thumbnailFilename = thumbnailFilename;
+   }
+
    public FacebookAlbumReference getAlbum() {
       return album;
    }
@@ -107,19 +119,19 @@ public class FacebookPhoto implements Serializable {
       this.createdTime = createdTime;
    }
 
-   public int getWidth() {
+   public Integer getWidth() {
       return width;
    }
 
-   public void setWidth(int width) {
+   public void setWidth(Integer width) {
       this.width = width;
    }
 
-   public int getHeight() {
+   public Integer getHeight() {
       return height;
    }
 
-   public void setHeight(int height) {
+   public void setHeight(Integer height) {
       this.height = height;
    }
 

@@ -8,9 +8,11 @@ import { AuthGuard }         from '../guards/index';
 import { LoginComponent }    from '../login/index';
 import { RegisterComponent } from '../register/index';
 import { HomeComponent }     from '../home/index';
+import { PhotosComponent }   from '../photos/index';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'album/:id', component: PhotosComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
 

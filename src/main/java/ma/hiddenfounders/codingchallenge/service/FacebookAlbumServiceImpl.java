@@ -1,5 +1,7 @@
 package ma.hiddenfounders.codingchallenge.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -21,12 +23,18 @@ class FacebookAlbumServiceImpl implements FacebookAlbumService {
    }
 
    @Override
-   public Page<FacebookAlbum> findUserFacebookAlbums(FacebookAlbum probe, Pageable pageable) {
+   public Page<FacebookAlbum> getUserFacebookAlbums(FacebookAlbum probe, Pageable pageable) {
       return fbAlbumRepository.findAll(Example.of(probe), pageable);
    }
 
    @Override
    public FacebookAlbum saveFacebookAlbum(FacebookAlbum album) {
       return fbAlbumRepository.save(album);
+   }
+
+   @Override
+   public FacebookAlbum getFacebookAlbumById(String id) {
+      Optional<FacebookAlbum> albumOpt = fbAlbumRepository.findById(id);
+      return albumOpt.orElse(null);
    }
 }

@@ -13,3 +13,6 @@ src/main/webapp/src/main.js.map
 .project
 .classpath
 .settings/
+
+# Resources
+src/main/webapp/facebook/

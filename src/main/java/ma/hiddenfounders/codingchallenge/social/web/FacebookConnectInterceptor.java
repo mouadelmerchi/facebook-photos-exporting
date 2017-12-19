@@ -20,14 +20,14 @@ import org.springframework.web.context.request.WebRequest;
 import ma.hiddenfounders.codingchallenge.service.FacebookImportService;
 
 @Component
-public class FacebookConnectionInterceptor implements ConnectInterceptor<Facebook> {
+public class FacebookConnectInterceptor implements ConnectInterceptor<Facebook> {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(FacebookConnectionInterceptor.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(FacebookConnectInterceptor.class);
 
-   private static final String USER_EMAIL_ATTRIBUTE = "userEmail";
+   private static final String USER_EMAIL_ATT_NAME = "userEmail";
 
    @Autowired
-   FacebookImportService facebookConnectionService;
+   FacebookImportService facebookConnectService;
 
    @Autowired
    private ServletContext context;
@@ -49,10 +49,11 @@ public class FacebookConnectionInterceptor implements ConnectInterceptor<Faceboo
    }
 
    @Override
-   public void preConnect(ConnectionFactory<Facebook> connectionFactory, MultiValueMap<String, String> parameters, WebRequest request) {
-      String requestUserEmail = request.getParameter("userEmail");
+   public void preConnect(ConnectionFactory<Facebook> connectionFactory, MultiValueMap<String, String> parameters,
+         WebRequest request) {
+      String requestUserEmail = request.getParameter(USER_EMAIL_ATT_NAME);
       LOGGER.info("########### preConnect in Interceptor: User email {} #############", requestUserEmail);
-      sessionStrategy.setAttribute(request, USER_EMAIL_ATTRIBUTE, requestUserEmail);
+      sessionStrategy.setAttribute(request, USER_EMAIL_ATT_NAME, requestUserEmail);
    }
 
    @Override
@@ -60,13 +61,12 @@ public class FacebookConnectionInterceptor implements ConnectInterceptor<Faceboo
       String requestUserEmail = extractCachedRequestUserEmail(request);
       LOGGER.info("########### postConnect In Interceptor: User email {} #############", requestUserEmail);
       String realAlbumsPath = context.getRealPath(facebookAlbumsPath);
-      facebookConnectionService.importFacebookAlbums(requestUserEmail, realAlbumsPath, defaultPageSize,
-            facebookImagesExt);
+      facebookConnectService.importFacebookAlbums(requestUserEmail, realAlbumsPath, defaultPageSize, facebookImagesExt);
    }
 
    private String extractCachedRequestUserEmail(WebRequest request) {
-      String requestUserEmail = (String) sessionStrategy.getAttribute(request, USER_EMAIL_ATTRIBUTE);
-      sessionStrategy.removeAttribute(request, USER_EMAIL_ATTRIBUTE);
+      String requestUserEmail = (String) sessionStrategy.getAttribute(request, USER_EMAIL_ATT_NAME);
+      sessionStrategy.removeAttribute(request, USER_EMAIL_ATT_NAME);
       return requestUserEmail;
    }
 }

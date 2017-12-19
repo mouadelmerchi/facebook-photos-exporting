@@ -1,79 +1,148 @@
 package ma.hiddenfounders.codingchallenge.rest;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import ma.hiddenfounders.codingchallenge.common.util.CurrentUser;
-import ma.hiddenfounders.codingchallenge.common.util.Utils;
-import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetails;
+import ma.hiddenfounders.codingchallenge.dto.AlbumsListResponse;
+import ma.hiddenfounders.codingchallenge.dto.FacebookAlbumDTO;
+import ma.hiddenfounders.codingchallenge.dto.FacebookPhotoDTO;
+import ma.hiddenfounders.codingchallenge.dto.PhotosListResponse;
+import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
+import ma.hiddenfounders.codingchallenge.entity.FacebookAlbumReference;
+import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
+import ma.hiddenfounders.codingchallenge.service.FacebookAlbumService;
+import ma.hiddenfounders.codingchallenge.service.FacebookPhotoService;
 
 @RestController
-@RequestMapping("/api/connect")
+@RequestMapping("/api/facebook")
 public class FacebookRestController {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(FacebookRestController.class);
-
-   @RequestMapping(value = "/facebook", method = RequestMethod.GET)
-   public String facebookConnectionStatus(@CurrentUser JwtUserDetails userDetails) {
-      
-      LOGGER.info("############# User {} #############", userDetails);
-      
-      RestTemplate restTemplate = new RestTemplate();
-
-      String url = "http://localhost:8080/connect/{providerId}";
-      
-      Map<String, String> vars = new HashMap<>();
-      vars.put("providerId", "facebook");
-      
-      String view = restTemplate.getForObject(url, String.class, vars);
-      
-      LOGGER.info("########### returned view {} #############", view);
-      
-      return "redirect:/";
-   }
    
-   @RequestMapping(value = "/facebook", method = RequestMethod.POST)
-   public ResponseEntity<String> connectToFacebook(@CurrentUser JwtUserDetails userDetails) {
+   private static final String THUMBNAIL_SUFFIX = "thumbnail";
 
-      LOGGER.info("############# User {} #############", userDetails);
+   @Value("${app.facebook.images.path}")
+   private String facebookAlbumsPath;
 
-      RestTemplate restTemplate = new RestTemplate();
+   @Value("${app.facebook.albums.pageSize}")
+   private Integer albumsPageSize;
 
-      String url = "http://localhost:8080/connect/{providerId}";
+   @Value("${app.facebook.photos.pageSize}")
+   private Integer photosPageSize;
 
-      // Setting up path to be sent to REST service
-      Map<String, String> vars = new HashMap<>();
-      vars.put("providerId", "facebook");
+   @Autowired
+   private FacebookAlbumService fbAlbumService;
 
-      // Setting body objects to be POSTed
-      MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-      body.add("scope", Utils.FACEBOOK_SCOPE);
+   @Autowired
+   private FacebookPhotoService fbPhotoService;
 
-      HttpHeaders headers = new HttpHeaders();
-      headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+   @Autowired
+   private ServletContext context;
 
-      HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+   private String realAlbumsPath;
 
-      URI location = restTemplate.postForLocation(url, request, vars);
-      headers.setLocation(location);
+   @PostConstruct
+   public void init() {
+      realAlbumsPath = context.getRealPath(facebookAlbumsPath);
+   }
 
-      LOGGER.info("############ HttpHeaders {}", headers);
+   @RequestMapping(value = "/albums", method = RequestMethod.GET)
+   @ResponseBody
+   public ResponseEntity<AlbumsListResponse> fetchUserAlbums(@CurrentUser UserDetails user) {
 
-      return ResponseEntity.ok().headers(headers).body("Redirect to facebook sign in page");
+      int currentPage = 0;
+      String email = user.getUsername();
+      FacebookAlbum probe = new FacebookAlbum();
+      probe.setOwner(email);
+      List<FacebookAlbumDTO> albumsPage = fbAlbumService
+            .getUserFacebookAlbums(probe, PageRequest.of(currentPage, albumsPageSize))
+            .stream()
+            .map(fbAlbum -> {
+               FacebookPhoto fbPhoto = fbPhotoService.getFacebookPhotoById(fbAlbum.getCoverPhoto().getId());
+
+               if (fbPhoto == null) {
+                  return null;
+               }
+
+               String coverPhotoUri = MvcUriComponentsBuilder.fromMethodName(FacebookRestController.class,
+                     "fetchPhotoResource", String.format("%s-%s", fbPhoto.getImageKey(), THUMBNAIL_SUFFIX)).build()
+                     .toString();
+               return new FacebookAlbumDTO(fbAlbum.getId(), fbAlbum.getName(), fbAlbum.getCount(), coverPhotoUri,
+                     fbAlbum.getType());
+            })
+            .filter(fbAlbumDto -> fbAlbumDto != null)
+            .collect(Collectors.toList());
+
+      if (albumsPage.isEmpty()) {
+         return ResponseEntity.ok(null);
+      }
+
+      return ResponseEntity.ok(new AlbumsListResponse(albumsPage, currentPage, albumsPageSize));
+   }
+
+   @RequestMapping(value = "/albums/{albumId}", method = RequestMethod.GET)
+   public ResponseEntity<PhotosListResponse> fetchPhotoResources(@PathVariable String albumId) {
+      
+      FacebookAlbum fbAlbum = fbAlbumService.getFacebookAlbumById(albumId);
+      if (fbAlbum == null) {
+         return ResponseEntity.badRequest().body(null);
+      }
+
+      LOGGER.info("########## albumId: {} #########", albumId);
+      
+      int currentPage = 0;
+      FacebookPhoto probe = new FacebookPhoto();
+      probe.setAlbum(new FacebookAlbumReference(albumId));
+      List<FacebookPhotoDTO> photosPage = fbPhotoService
+            .getFacebookPhotos(probe, PageRequest.of(currentPage, photosPageSize))
+            .stream()
+            .map(fbPhoto -> {
+               if (fbPhoto == null) {
+                  return null;
+               }
+      
+               String photoUri = MvcUriComponentsBuilder.fromMethodName(FacebookRestController.class, "fetchPhotoResource",
+                     String.format("%s-%s", fbPhoto.getImageKey(), THUMBNAIL_SUFFIX)).build().toString();
+      
+               return new FacebookPhotoDTO(fbPhoto.getId(), fbPhoto.getName(), photoUri, fbPhoto.getImageKey());
+            })
+            .collect(Collectors.toList());
+
+      return ResponseEntity.ok(new PhotosListResponse(photosPage, fbAlbum.getName(), currentPage, photosPageSize));
+   }
+
+   @RequestMapping(value = "/albums/photo/{imageKey:.+}", method = RequestMethod.GET)
+   @ResponseBody
+   public ResponseEntity<Resource> fetchPhotoResource(@PathVariable String imageKey) {
+      boolean isThumb = false;
+      if (imageKey != null && imageKey.endsWith(THUMBNAIL_SUFFIX)) {
+         isThumb = true;
+         imageKey = imageKey.substring(0, imageKey.length() - THUMBNAIL_SUFFIX.length() - 1);
+      }
+
+      FacebookPhoto photo = fbPhotoService.getFacebookPhotoByImageKey(imageKey);
+      Resource resource = fbPhotoService.loadPhotoImageFromDisc(realAlbumsPath, photo, isThumb);
+      return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+            String.format("attachment; filename=\"%s\"", resource.getFilename())).body(resource);
    }
 }

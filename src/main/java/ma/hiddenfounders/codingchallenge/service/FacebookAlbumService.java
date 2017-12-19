@@ -7,9 +7,11 @@ import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
 
 public interface FacebookAlbumService {
 
+   FacebookAlbum getFacebookAlbumById(String id);
+   
    long countFacebookAlbumsByOwner(String ownerEmail);
    
-   Page<FacebookAlbum> findUserFacebookAlbums(FacebookAlbum probe, Pageable pageable);
+   Page<FacebookAlbum> getUserFacebookAlbums(FacebookAlbum probe, Pageable pageable);
    
    FacebookAlbum saveFacebookAlbum(FacebookAlbum album);
 }

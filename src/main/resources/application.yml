@@ -30,6 +30,8 @@ app:
     images:
       path: facebook/media
       extension: jpg
+      thumbnailTargetWidth: 356
+      thumbnailTargetHeight: 280
     albums:
       pageSize: 9
     photos:

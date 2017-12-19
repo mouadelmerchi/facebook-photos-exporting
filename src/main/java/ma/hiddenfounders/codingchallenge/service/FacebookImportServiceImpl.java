@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.facebook.api.Album;
 import org.springframework.social.facebook.api.Facebook;
@@ -23,8 +21,6 @@ import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
 @Service
 class FacebookImportServiceImpl implements FacebookImportService {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(FacebookImportServiceImpl.class);
-
    @Autowired
    private Facebook facebook;
 
@@ -38,8 +34,6 @@ class FacebookImportServiceImpl implements FacebookImportService {
    public void importFacebookAlbums(String userEmail, String albumsPath, Integer defaultPageSize, String imagesExt) {
       if (userEmail != null) {
          long nbAlbums = fbAlbumService.countFacebookAlbumsByOwner(userEmail);
-
-         LOGGER.debug("# of albums of {} is {} @@@@@", userEmail, nbAlbums);
 
          // Check to see whether albums importing is necessary
          if (nbAlbums == 0) {

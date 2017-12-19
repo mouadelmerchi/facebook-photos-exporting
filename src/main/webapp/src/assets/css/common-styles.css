@@ -106,3 +106,51 @@ a {
 	  transform: scale(1);
 	}
 }
+
+/* Home page CSS */
+
+.jumbotron {
+	padding-top: 6rem;
+	padding-bottom: 6rem;
+	margin-bottom: 0;
+	background-color: #fff;
+}
+
+.jumbotron p:last-child {
+	margin-bottom: 0;
+}
+
+.jumbotron-heading {
+	font-weight: 300;
+}
+
+.jumbotron .container {
+	max-width: 40rem;
+}
+
+.album {
+	min-height: 30rem; /* Can be removed; just added for demo purposes */
+	padding-bottom: 3rem;
+	background-color: #f7f7f7;
+}
+
+.album .card {
+	float: left;
+	width: 33.333%;
+	padding: .75rem;
+	margin-bottom: 2rem;
+	border: 0;
+}
+
+.album .card-text {
+	font-size: 85%;
+}
+
+.album .no-content-area {
+	background-image: url('/src/assets/img/no-albums.png');
+	background-repeat: no-repeat;
+	background-attachment: relative;
+	background-position: center;
+	width: 100%;
+	min-height: 30rem;
+}

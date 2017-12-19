@@ -17,7 +17,7 @@ public class FacebookAlbum implements Serializable {
 
    private String name;
 
-   private int count;
+   private Integer count;
 
    private PhotoReference coverPhoto;
 
@@ -26,13 +26,14 @@ public class FacebookAlbum implements Serializable {
    private String owner;
 
    public FacebookAlbum() {
+      this(null, null, null, null, null, null);
    }
 
-   public FacebookAlbum(String id, String name, int count, Type type, String owner) {
+   public FacebookAlbum(String id, String name, Integer count, Type type, String owner) {
       this(id, name, count, null, type, owner);
    }
 
-   public FacebookAlbum(String id, String name, int count, PhotoReference coverPhoto, Type type, String owner) {
+   public FacebookAlbum(String id, String name, Integer count, PhotoReference coverPhoto, Type type, String owner) {
       this.id = id;
       this.name = name;
       this.count = count;
@@ -57,11 +58,11 @@ public class FacebookAlbum implements Serializable {
       this.name = name;
    }
 
-   public int getCount() {
+   public Integer getCount() {
       return count;
    }
 
-   public void setCount(int count) {
+   public void setCount(Integer count) {
       this.count = count;
    }
 

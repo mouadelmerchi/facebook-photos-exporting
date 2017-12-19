@@ -32,14 +32,14 @@
    <div class="container">
       <div class="row">
          <div *ngFor="let album of tuple?.albums" class="card">
-            <a href="javascript:void(0)" (click)="onGetAlbumPhotos(album.id)">
-               <img src="{{album.coverPhotoUri}}" style="background-color: #55595c; color: #eceeef;" alt="Card image cap" />
+            <a [routerLink]="['/album', album.id]">
+               <photo-details [photoUri]='album.coverPhotoUri'></photo-details>
             </a>
             <p class="card-text">
                {{album.name}}
             </p>
          </div>
-         <div *ngIf='tuple?.albums.length === 0' class="no-albums-area"></div>
+         <div *ngIf='tuple?.albums.length === 0' class="no-content-area"></div>
       </div>
    </div>
 </div>

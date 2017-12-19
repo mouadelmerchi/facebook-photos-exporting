@@ -86,6 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   "/**/*.svg").permitAll()
             .antMatchers("/auth/**").permitAll()
             .antMatchers("/connect/**").permitAll()
+            .antMatchers("/api/facebook/albums/photo/{imageKey:.+}").permitAll()
          .anyRequest()
             .authenticated()
             .and()
