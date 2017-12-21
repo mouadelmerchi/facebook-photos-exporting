@@ -6,7 +6,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import ma.hiddenfounders.codingchallenge.entity.FacebookAlbumReference;
 import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
 
 public interface FacebookPhotoService {
@@ -18,6 +17,8 @@ public interface FacebookPhotoService {
    FacebookPhoto getFacebookPhotoByImageKey(String imageKey);
 
    Page<FacebookPhoto> getFacebookPhotos(FacebookPhoto probe, Pageable pageable);
+   
+   long FacebookPhotosCount();
 
    boolean savePhotoImageToDisc(String realAlbumsPath, FacebookPhoto photo) throws IOException;
 

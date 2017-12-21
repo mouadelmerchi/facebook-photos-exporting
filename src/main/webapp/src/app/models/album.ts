@@ -9,5 +9,7 @@ export class Album {
 export class AlbumsListResponse {
     albums: Array<Album>;
     currentPage: number;
+    totalCount: number;
     pageSize: number;
+    pagesToShow: number;
 }

@@ -62,6 +62,11 @@ class FacebookPhotoServiceImpl implements FacebookPhotoService {
    public Page<FacebookPhoto> getFacebookPhotos(FacebookPhoto probe, Pageable pageable) {
       return fbPhotoRepository.findAll(Example.of(probe), pageable);
    }
+   
+   @Override
+   public long FacebookPhotosCount() {
+      return fbPhotoRepository.count();
+   }
 
    @Override
    public boolean savePhotoImageToDisc(String realAlbumsPath, FacebookPhoto photo) throws IOException {

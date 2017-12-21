@@ -36,6 +36,7 @@ app:
       pageSize: 9
     photos:
       pageSize: 12
+    pagesToShow: 10  
     defaultPageSize: 25
 ---
 spring:

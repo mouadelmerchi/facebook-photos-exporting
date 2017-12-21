@@ -26,6 +26,16 @@
          contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it
          entirely.</p>
       <!-- END IF -->
+      <app-pagination
+        [currentPage]='currentPage'
+        [totalCount]='tuple?.totalCount'
+        [pageSize]='tuple?.pageSize'
+        [pagesToShow]='tuple?.pagesToShow'
+        [loading]='loading'
+        (goPrev)="prevPage()"
+        (goPage)="goToPage($event)"
+        (goNext)="nextPage()">
+      </app-pagination>
    </div>
 </section>
 <div class="album text-muted">

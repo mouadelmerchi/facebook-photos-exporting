@@ -22,6 +22,7 @@ import { LoginComponent }        from './login/index';
 import { RegisterComponent }     from './register/index';
 import { AppHeaderComponent }    from './app-header/index';
 import { AppFooterComponent }    from './app-footer/index';
+import { PaginationComponent }   from './pagination/index';
 import { HomeComponent }         from './home/index';
 import { PhotosComponent }       from './photos/index';
 import { PhotoDetailsComponent } from './photo-details/index';
@@ -41,6 +42,7 @@ import { PhotoDetailsComponent } from './photo-details/index';
         RegisterComponent,
         AppHeaderComponent,
         AppFooterComponent,
+        PaginationComponent,
         HomeComponent,
         PhotosComponent,
         PhotoDetailsComponent

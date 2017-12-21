@@ -44,6 +44,9 @@ public class FacebookRestController {
    @Value("${app.facebook.images.path}")
    private String facebookAlbumsPath;
 
+   @Value("${app.facebook.pagesToShow}")
+   private Integer pagesToShow;
+   
    @Value("${app.facebook.albums.pageSize}")
    private Integer albumsPageSize;
 
@@ -66,16 +69,16 @@ public class FacebookRestController {
       realAlbumsPath = context.getRealPath(facebookAlbumsPath);
    }
 
-   @RequestMapping(value = "/albums", method = RequestMethod.GET)
+   @RequestMapping(value = "/albums/page/{currentPage}", method = RequestMethod.GET)
    @ResponseBody
-   public ResponseEntity<AlbumsListResponse> fetchUserAlbums(@CurrentUser UserDetails user) {
+   public ResponseEntity<AlbumsListResponse> fetchUserAlbums(@CurrentUser UserDetails user, @PathVariable Integer currentPage) {
 
-      int currentPage = 0;
       String email = user.getUsername();
       FacebookAlbum probe = new FacebookAlbum();
       probe.setOwner(email);
+      long totalCount = fbAlbumService.countFacebookAlbumsByOwner(email);
       List<FacebookAlbumDTO> albumsPage = fbAlbumService
-            .getUserFacebookAlbums(probe, PageRequest.of(currentPage, albumsPageSize))
+            .getUserFacebookAlbums(probe, PageRequest.of(currentPage - 1, albumsPageSize))
             .stream()
             .map(fbAlbum -> {
                FacebookPhoto fbPhoto = fbPhotoService.getFacebookPhotoById(fbAlbum.getCoverPhoto().getId());
@@ -97,11 +100,12 @@ public class FacebookRestController {
          return ResponseEntity.ok(null);
       }
 
-      return ResponseEntity.ok(new AlbumsListResponse(albumsPage, currentPage, albumsPageSize));
+      return ResponseEntity.ok(new AlbumsListResponse(albumsPage, totalCount, albumsPageSize, pagesToShow));
    }
 
-   @RequestMapping(value = "/albums/{albumId}", method = RequestMethod.GET)
-   public ResponseEntity<PhotosListResponse> fetchPhotoResources(@PathVariable String albumId) {
+   @RequestMapping(value = "/albums/{albumId}/page/{currentPage}", method = RequestMethod.GET)
+   @ResponseBody
+   public ResponseEntity<PhotosListResponse> fetchPhotoResources(@PathVariable String albumId, @PathVariable Integer currentPage) {
       
       FacebookAlbum fbAlbum = fbAlbumService.getFacebookAlbumById(albumId);
       if (fbAlbum == null) {
@@ -110,11 +114,10 @@ public class FacebookRestController {
 
       LOGGER.info("########## albumId: {} #########", albumId);
       
-      int currentPage = 0;
       FacebookPhoto probe = new FacebookPhoto();
       probe.setAlbum(new FacebookAlbumReference(albumId));
       List<FacebookPhotoDTO> photosPage = fbPhotoService
-            .getFacebookPhotos(probe, PageRequest.of(currentPage, photosPageSize))
+            .getFacebookPhotos(probe, PageRequest.of(currentPage - 1, photosPageSize))
             .stream()
             .map(fbPhoto -> {
                if (fbPhoto == null) {
@@ -128,7 +131,7 @@ public class FacebookRestController {
             })
             .collect(Collectors.toList());
 
-      return ResponseEntity.ok(new PhotosListResponse(photosPage, fbAlbum.getName(), currentPage, photosPageSize));
+      return ResponseEntity.ok(new PhotosListResponse(photosPage, fbAlbum.getName(), fbAlbum.getCount(), photosPageSize, pagesToShow));
    }
 
    @RequestMapping(value = "/albums/photo/{imageKey:.+}", method = RequestMethod.GET)
