@@ -1,18 +1,66 @@
-# Compiled output
+# Skip maven wrapper jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Parent Compiled output
 dist/
 target/
+bin/
 
-# Dependencies
-src/main/webapp/node_modules/
-src/main/webapp/src/app/**/*.js
-src/main/webapp/src/app/**/*.js.map
-src/main/webapp/src/main.js
-src/main/webapp/src/main.js.map
+# Backend
+backend/dist/
+backend/target/
+backend/.settings/
+backend/.project
+backend/.classpath
+backend/*.launch
+backend/.apt_generated
+backend/.factorypath
+backend/.springBeans
+backend/.idea
+backend/*.iws
+backend/*.iml
+backend/*.ipr
+
+# Frontend
+frontend/target/
+frontend/dist/
+frontend/src/main/webapp/dist
+frontend/src/main/webapp/tmp
+frontend/src/main/webapp/out-tsc
+frontend/src/main/webapp/node/
+frontend/src/main/webapp/node_modules/
+frontend/src/main/webapp/src/app/**/*.js
+frontend/src/main/webapp/src/app/**/*.js.map
+frontend/src/main/webapp/src/main.js
+frontend/src/main/webapp/src/main.js.map
+frontend/src/main/webapp/typings/
+frontend/.settings/
+frontend/.project
+frontend/.classpath
+frontend/*.launch
+frontend/.apt_generated
+frontend/.factorypath
+frontend/.springBeans
+frontend/.idea
+frontend/*.iws
+frontend/*.iml
+frontend/*.ipr
 
 # Eclipse IDE
 .project
 .classpath
 .settings/
+*.launch
+.apt_generated
+.factorypath
+.springBeans
 
-# Resources
-src/main/webapp/facebook/
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+# e2e
+frontend/src/main/webapp/e2e/*.js
+frontend/src/main/webapp/e2e/*.map
