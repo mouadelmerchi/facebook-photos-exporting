@@ -1,6 +1,6 @@
 # Facebook Photos Import Coding Challenge
 
-![Screenshot from running application](etc/screenshot-facebook-photos-import-coding-challenge.png?raw=true "Screenshot Facebook Photos Import Coding Challenge")
+![Screenshot from running application](etc/screenshot-facebook-photos-import-coding-challenge.PNG?raw=true "Screenshot Facebook Photos Import Coding Challenge")
 
 ## About
 
