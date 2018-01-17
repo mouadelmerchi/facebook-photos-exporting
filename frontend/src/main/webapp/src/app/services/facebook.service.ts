@@ -72,12 +72,4 @@ export class FacebookService {
                 throw (errObj);
             });
     }
-    
-    getPhoto(photoId: string): Observable<any> {
-         return this.http.get<Photo>(this.fbAlbumsUrl + '/photo/' + photoId)
-          .catch(err => {
-                let errObj: any = err || { status: 500, error: 'System error. Please try again later' };
-                throw (errObj);
-            });
-    }
 }

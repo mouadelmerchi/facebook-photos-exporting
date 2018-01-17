@@ -1,29 +1,37 @@
 <app-header></app-header>
-<section class="jumbotron text-center">
+<section id="photosSection" class="jumbotron text-center">
    <div class="container">
       <h1 class="jumbotron-heading">{{tuple?.albumName}}</h1>
-      <app-pagination 
-         [currentPage]='currentPage' 
-         [totalCount]='tuple?.totalCount' 
-         [pageSize]='tuple?.pageSize'
-         [pagesToShow]='tuple?.pagesToShow' 
-         [loading]='loading' 
-         (goPrev)="prevPage()" 
-         (goPage)="goToPage($event)"
-         (goNext)="nextPage()"> 
-      </app-pagination>
+      <app-pagination [currentPage]='currentPage' [totalCount]='tuple?.totalCount' [pageSize]='tuple?.pageSize'
+         [pagesToShow]='tuple?.pagesToShow' [loading]='loading' (goPrev)="prevPage()" (goPage)="goToPage($event)"
+         (goNext)="nextPage()"> </app-pagination>
    </div>
 </section>
 <div class="album text-muted">
    <div class="container">
       <div class="row">
          <div *ngFor="let photo of tuple?.photos" class="card">
-            <a (click)="showPhoto(photo.id)">
-               <photo-details [photoUri]='photo.photoUri'></photo-details>
+            <a data-toggle="modal" data-target="#photoModal" (click)="showPhoto(photo.photoUri)" mdbRippleRadius>
+               <photo-details [photoUri]='photo.photoThumbUri'></photo-details>
             </a>
+            <p class="card-text">{{photo.name}}</p>
          </div>
          <div *ngIf='tuple?.photos.length === 0' class="no-content-area"></div>
+         <div mdbModal #photoModal="mdb-modal" class="modal fade" id="photoModal" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <img src="{{photoUri}}" alt="" class="mx-auto d-block img-fluid" />
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-elegant waves-light" aria-label="Close"
+                        (click)="photoModal.hide()" mdbRippleRadius>Close</button>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    </div>
 </div>
-<app-footer></app-footer>
+<app-footer [topSection]="'photosSection'"></app-footer>

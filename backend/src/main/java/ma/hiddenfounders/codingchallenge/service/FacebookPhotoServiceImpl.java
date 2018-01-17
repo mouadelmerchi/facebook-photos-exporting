@@ -1,6 +1,7 @@
 package ma.hiddenfounders.codingchallenge.service;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.ImagingOpException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -36,10 +37,10 @@ class FacebookPhotoServiceImpl implements FacebookPhotoService {
    @Value("${app.facebook.images.extension}")
    private String facebookImagesExt;
 
-   @Value("${app.facebook.images.thumbnailTargetWidth}")
+   @Value("${app.facebook.images.tumbnailTargetWidth}")
    private Integer tumbnailTargetWidth;
 
-   @Value("${app.facebook.images.thumbnailTargetHeight}")
+   @Value("${app.facebook.images.tumbnailTargetHeight}")
    private Integer tumbnailTargetHeight;
 
    @Override
@@ -62,7 +63,7 @@ class FacebookPhotoServiceImpl implements FacebookPhotoService {
    public Page<FacebookPhoto> getFacebookPhotos(FacebookPhoto probe, Pageable pageable) {
       return fbPhotoRepository.findAll(Example.of(probe), pageable);
    }
-   
+
    @Override
    public long FacebookPhotosCount() {
       return fbPhotoRepository.count();
@@ -79,16 +80,40 @@ class FacebookPhotoServiceImpl implements FacebookPhotoService {
 
          // Save thumbnail version of the image
          BufferedImage srcImage = ImageIO.read(file);
-         BufferedImage scaledImage = Scalr.resize(srcImage, tumbnailTargetWidth, tumbnailTargetHeight);
-         byte[] imageBytes = getBytesFromBufferedImage(scaledImage);
+         BufferedImage thumbnail = createThumbnail(srcImage);
+         try {
+            byte[] imageBytes = getBytesFromBufferedImage(thumbnail);
 
-         File thumbnailFile = parent.resolve(photo.getThumbnailFilename()).toFile();
+            File thumbnailFile = parent.resolve(photo.getThumbnailFilename()).toFile();
 
-         FileCopyUtils.copy(imageBytes, thumbnailFile);
+            FileCopyUtils.copy(imageBytes, thumbnailFile);
 
-         return true;
+            return true;
+         } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+         }
       }
       return false;
+   }
+
+   private BufferedImage createThumbnail(BufferedImage sourceImage) {
+      BufferedImage thumbnail = null;
+      try {
+         thumbnail = Scalr.resize(sourceImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, tumbnailTargetWidth,
+               tumbnailTargetHeight);
+         if (thumbnail.getWidth() > tumbnailTargetWidth) {
+            thumbnail = Scalr.crop(thumbnail, (thumbnail.getWidth() - tumbnailTargetWidth) / 2, 0, tumbnailTargetWidth,
+                  tumbnailTargetHeight);
+         } else if (thumbnail.getHeight() > tumbnailTargetHeight) {
+            thumbnail = Scalr.crop(thumbnail, 0, (thumbnail.getHeight() - tumbnailTargetHeight) / 2,
+                  tumbnailTargetWidth, tumbnailTargetHeight);
+         }
+      } catch (IllegalArgumentException | ImagingOpException e) {
+         throw new RuntimeException("imgscalr threw an exception: " + e.getMessage());
+      }
+
+      return thumbnail;
    }
 
    @Override

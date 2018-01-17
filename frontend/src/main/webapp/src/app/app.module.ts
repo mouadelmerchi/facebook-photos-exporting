@@ -1,7 +1,12 @@
-import { NgModule }              from '@angular/core';
+import { 
+    NgModule, 
+    NO_ERRORS_SCHEMA 
+}                                from '@angular/core';
 import { BrowserModule }         from '@angular/platform-browser';
 import { FormsModule }           from '@angular/forms';
 import { HttpClientModule }      from '@angular/common/http';
+
+import { MDBBootstrapModule }    from 'angular-bootstrap-md';
 
 import {
     AppRoutingModule,
@@ -34,7 +39,8 @@ import { PhotoDetailsComponent } from './photo-details/index';
         FormsModule,
         AppRoutingModule,
         HttpClientModule,
-        AppInterceptorModule
+        AppInterceptorModule,
+        MDBBootstrapModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -56,6 +62,7 @@ import { PhotoDetailsComponent } from './photo-details/index';
         UserService,
         FacebookService
     ],
+    schemas: [ NO_ERRORS_SCHEMA ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

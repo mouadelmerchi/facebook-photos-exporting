@@ -14,7 +14,7 @@ import {
 @Component({
     moduleId: module.id,
     templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css']
+    styleUrls: ['./register.component.scss']
 })
 
 export class RegisterComponent implements OnInit {

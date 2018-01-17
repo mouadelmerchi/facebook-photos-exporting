@@ -2,7 +2,14 @@
 <footer class="text-muted">
    <div class="container">
       <p class="float-right">
-         <a href="#" class="to-top">Back to top</a>
+         <button href="#{{topSection}}" 
+            class="btn btn-floating btn-large red waves-light" 
+            style="right: 35px; bottom: 35px;" 
+            mdbPageScroll 
+            mdbRippleRadius
+            [pageScrollDuration]="750">
+            <i class="fa fa-chevron-up"></i>
+         </button>
       </p>
       <p>Facebook Photos Exporting &copy; 2017</p>
    </div>

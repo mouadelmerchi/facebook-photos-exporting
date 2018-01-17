@@ -31,9 +31,6 @@ public class UserRestController {
    @Value("${jwt.header}")
    private String tokenHeader;
 
-   @Value("/${jwt.route.authentication.path}")
-   private String authPath;
-
    @Autowired
    private AuthenticationUtil authUtil;
 
@@ -46,7 +43,7 @@ public class UserRestController {
    @Autowired
    private UserService userService;
 
-   @RequestMapping(value = "/auth/user", method = RequestMethod.GET)
+   @RequestMapping(value = "/${jwt.route.authentication.path}/user", method = RequestMethod.GET)
    public void getAuthenticatedUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String authToken = request.getHeader(tokenHeader);
 
@@ -60,7 +57,7 @@ public class UserRestController {
       SecurityUtils.sendResponse(response, HttpServletResponse.SC_OK, user);
    }
 
-   @RequestMapping(value = "/auth/user", method = RequestMethod.POST)
+   @RequestMapping(value = "/${jwt.route.authentication.path}/user", method = RequestMethod.POST)
    public void saveAndAuthenticateUser(@RequestBody User user, HttpServletResponse response, Device device)
          throws AuthenticationException, IOException {
       try {

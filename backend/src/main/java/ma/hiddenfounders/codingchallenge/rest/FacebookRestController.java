@@ -125,28 +125,11 @@ public class FacebookRestController {
             .ok(new PhotosListResponse(photosPage, fbAlbum.getName(), fbAlbum.getCount(), photosPageSize, pagesToShow));
    }
 
-   // @RequestMapping(value = "/albums/photo/{photoId}", method =
-   // RequestMethod.GET)
-   // @ResponseBody
-   // public ResponseEntity<FacebookPhotoDTO> fetchPhoto(@PathVariable String
-   // photoId) {
-   //
-   // FacebookPhoto fbPhoto = fbPhotoService.getFacebookPhotoById(photoId);
-   //
-   // String photoUri = MvcUriComponentsBuilder
-   // .fromMethodName(FacebookRestController.class, "fetchPhotoResource",
-   // fbPhoto.getImageKey()).build()
-   // .toString();
-   //
-   // return ResponseEntity.ok(new FacebookPhotoDTO(fbPhoto.getId(),
-   // fbPhoto.getName(), photoUri));
-   // }
-
    @RequestMapping(value = "/albums/photo/resource/{imageKey:.+}/thumbnail/{isThumb}", method = RequestMethod.GET)
    @ResponseBody
-   public ResponseEntity<Resource> fetchPhotoResource(@PathVariable String imageKey, Boolean isThumbnail) {
+   public ResponseEntity<Resource> fetchPhotoResource(@PathVariable("imageKey") String imageKey, @PathVariable("isThumb") Boolean isThumb) {
       FacebookPhoto photo = fbPhotoService.getFacebookPhotoByImageKey(imageKey);
-      Resource resource = fbPhotoService.loadPhotoImageFromDisc(realAlbumsPath, photo, isThumbnail);
+      Resource resource = fbPhotoService.loadPhotoImageFromDisc(realAlbumsPath, photo, isThumb);
       return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
             String.format("attachment; filename=\"%s\"", resource.getFilename())).body(resource);
    }

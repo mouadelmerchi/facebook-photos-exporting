@@ -1,6 +1,6 @@
 <!-- Navigation Start -->
 <header>
-   <div class="collapse bg-dark" id="navbarHeader">
+   <div class="collapse bg-dark" [mdbCollapse]="isCollapsed" #navbarHeader="bs-collapse">
       <div class="container">
          <div class="row">
             <div class="col-sm-8 py-4">
@@ -28,8 +28,7 @@
    <nav class="navbar navbar-dark bg-dark">
       <div class="container d-flex justify-content-between">
          <a routerLink="/" routerLinkActive="active" class="navbar-brand">Albums</a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-            aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+         <button class="navbar-toggler" type="button" (click)="navbarHeader.toggle()" mdbRippleRadius>
             <span class="navbar-toggler-icon"></span>
          </button>
          <a [routerLink]="['/login']" class="power-off-icon">

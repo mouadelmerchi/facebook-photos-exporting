@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
 
 import { StorageService,
@@ -10,14 +10,18 @@ import { Photo }             from '../models/index';
 @Component({
     selector: 'photos',
     templateUrl: './photos.component.html',
-    styleUrls: ['./photos.component.css']
+    styleUrls: ['./photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
+    
+    @ViewChild('photoModal') public photoModal;
+    
     private subscription: any;
     tuple: any;
     albumId: string;
     currentPage: number = 1;
     loading: boolean = false;
+    photoUri: string;
 
     constructor(private storageService: StorageService,
         private facebookService: FacebookService,
@@ -35,22 +39,16 @@ export class PhotosComponent implements OnInit {
         this.facebookService.getAlbumPhotos(this.albumId, this.currentPage)
             .subscribe(result => {
                 this.tuple = result;
+                console.log(this.tuple.photos[0]);
                 this.loading = false;
             }, err => {
                 console.log("Status (" + err.status + ") => " + err.error);
             });
     }
 
-    showPhoto(photoId: string): void {
-        this.facebookService.getPhoto(photoId)
-            .subscribe(result => {
-                let photo: Photo = result;
-                if(photo) {
-                    // Show Photo
-                }
-            }, err => {
-                console.log("Status (" + err.status + ") => " + err.error);
-            });
+    showPhoto(uri: string): void {
+        this.photoUri = uri;
+        this.photoModal.show();
     }
 
     prevPage(): void {

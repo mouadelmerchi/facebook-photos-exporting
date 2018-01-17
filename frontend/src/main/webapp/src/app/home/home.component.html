@@ -1,5 +1,5 @@
 <app-header></app-header>
-<section class="jumbotron text-center">
+<section id="albumsSection" class="jumbotron text-center">
    <div class="container">
       <h1 class="jumbotron-heading">{{tuple?.title}}</h1>
       <!-- IF NOT CONNECTED -->
@@ -15,7 +15,7 @@
             <div class="form-group">
                <button type="submit" class="btn btn-lg btn-primary">
                   <i class="fa fa-facebook" aria-hidden="true"
-                     style="padding-right: 10px; margin-right: 5px; border-right: 2px solid #fff"></i> 
+                     style="padding-right:25px;margin-right:10px;border-right: 3px solid #fff"></i> 
                      Connect to Facebook
                </button>
             </div>
@@ -53,4 +53,4 @@
       </div>
    </div>
 </div>
-<app-footer></app-footer>
+<app-footer [topSection]="'albumsSection'"></app-footer>
