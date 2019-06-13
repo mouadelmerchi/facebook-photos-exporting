@@ -10,8 +10,8 @@ store them in a NoSQL database.
 
 The project contains two separate parts:
 
-* backend: containing the spring boot project
-* frontend: containing the angular project
+ * backend: containing the spring boot project
+ * frontend: containing the angular project
 
 ## Requirements
 
