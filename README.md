@@ -44,7 +44,7 @@ To install the modified version of "spring-social-facebook" to the local reposit
  
 or
 
- (`mvnw.cmd install:install-file -Dfile=etc/spring-social-facebook-3.0.0.M3.jar -DgroupId=org.springframework.social -DartifactId=spring-social-facebook -Dversion=3.0.0.M3 -Dpackaging=jar`) 
+ (`mvnw.cmd install:install-file -Dfile=etc/lib/spring-social-facebook-3.0.0.M3.jar -DgroupId=org.springframework.social -DartifactId=spring-social-facebook -Dversion=3.0.0.M3 -Dpackaging=jar`) 
  
  for windows users
  
