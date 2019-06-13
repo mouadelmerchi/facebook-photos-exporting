@@ -59,7 +59,7 @@ spring:
   datasource: 
     url: jdbc:mysql://localhost:3306/FacebookPhotosSecurityDB
     username: root
-    password: 
+    password: sql@2019#!
     driverClassName: com.mysql.jdbc.Driver
     defaultSchema:
     maxPoolSize: 20

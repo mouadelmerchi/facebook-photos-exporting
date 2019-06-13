@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS `User` (
 	`lastPasswordResetDate` TIMESTAMP NOT NULL,
 	
     CONSTRAINT PK_User PRIMARY KEY (`id`),
-    CONSTRAINT AK_User UNIQUE(`username`),
-    CONSTRAINT AK_User UNIQUE(`email`)
+    CONSTRAINT AK_User_Username UNIQUE(`username`),
+    CONSTRAINT AK_User_Email UNIQUE(`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `User_Authority` (
