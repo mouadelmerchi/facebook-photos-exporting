@@ -121,8 +121,7 @@ public class FacebookRestController {
                return new FacebookPhotoDTO(fbPhoto.getId(), fbPhoto.getName(), photoUri, photoThumbUri);
             }).collect(Collectors.toList());
 
-      return ResponseEntity
-            .ok(new PhotosListResponse(photosPage, fbAlbum.getName(), fbAlbum.getCount(), photosPageSize, pagesToShow));
+      return ResponseEntity.ok(new PhotosListResponse(photosPage, fbAlbum.getName(), fbAlbum.getCount(), photosPageSize, pagesToShow));
    }
 
    @RequestMapping(value = "/albums/photo/resource/{imageKey:.+}/thumbnail/{isThumb}", method = RequestMethod.GET)
@@ -130,7 +129,6 @@ public class FacebookRestController {
    public ResponseEntity<Resource> fetchPhotoResource(@PathVariable("imageKey") String imageKey, @PathVariable("isThumb") Boolean isThumb) {
       FacebookPhoto photo = fbPhotoService.getFacebookPhotoByImageKey(imageKey);
       Resource resource = fbPhotoService.loadPhotoImageFromDisc(realAlbumsPath, photo, isThumb);
-      return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-            String.format("attachment; filename=\"%s\"", resource.getFilename())).body(resource);
+      return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", resource.getFilename())).body(resource);
    }
 }
