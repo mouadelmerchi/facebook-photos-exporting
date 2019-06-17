@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
         email: 'admin@admin.com',
         password: 'admin'
     };
-    loading: boolean = false;
+    loading = false;
     returnUrl: string;
 
     constructor(
