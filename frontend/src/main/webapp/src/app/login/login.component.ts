@@ -18,8 +18,8 @@ import {
 })
 export class LoginComponent implements OnInit {
     model: any = {
-        email: "admin@admin.com",
-        password: "admin"    
+        email: 'admin@admin.com',
+        password: 'admin'
     };
     loading: boolean = false;
     returnUrl: string;
