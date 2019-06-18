@@ -73,7 +73,9 @@ public class FacebookRestController {
       probe.setOwner(email);
       long totalCount = fbAlbumService.countFacebookAlbumsByOwner(email);
       List<FacebookAlbumDTO> albumsPage = fbAlbumService
-            .getUserFacebookAlbums(probe, PageRequest.of(currentPage - 1, albumsPageSize)).stream().map(fbAlbum -> {
+            .getUserFacebookAlbums(probe, PageRequest.of(currentPage - 1, albumsPageSize))
+            .stream()
+            .map(fbAlbum -> {
                FacebookPhoto fbPhoto = fbPhotoService.getFacebookPhotoById(fbAlbum.getCoverPhoto().getId());
 
                if (fbPhoto == null) {
