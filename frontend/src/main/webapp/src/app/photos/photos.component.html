@@ -2,8 +2,8 @@
 <section id="photosSection" class="jumbotron text-center">
    <div class="container">
       <h1 class="jumbotron-heading">{{tuple?.albumName}}</h1>
-      <app-pagination [currentPage]='currentPage' [totalCount]='tuple?.totalCount' [pageSize]='tuple?.pageSize'
-         [pagesToShow]='tuple?.pagesToShow' [loading]='loading' (goPrev)="prevPage()" (goPage)="goToPage($event)"
+      <app-pagination [currentPage]="currentPage" [totalCount]="tuple?.totalCount" [pageSize]="tuple?.pageSize"
+         [pagesToShow]="tuple?.pagesToShow" [loading]="loading" (goPrev)="prevPage()" (goPage)="goToPage($event)"
          (goNext)="nextPage()"> </app-pagination>
    </div>
 </section>
@@ -12,11 +12,11 @@
       <div class="row">
          <div *ngFor="let photo of tuple?.photos" class="card">
             <a data-toggle="modal" data-target="#photoModal" (click)="showPhoto(photo.photoUri)" mdbRippleRadius>
-               <photo-details [photoUri]='photo.photoThumbUri'></photo-details>
+               <photo-details [photoUri]="photo.photoThumbUri"></photo-details>
             </a>
             <p class="card-text">{{photo.name}}</p>
          </div>
-         <div *ngIf='tuple?.photos.length === 0' class="no-content-area"></div>
+         <div *ngIf="tuple?.photos.length === 0" class="no-content-area"></div>
          <div mdbModal #photoModal="mdb-modal" class="modal fade" id="photoModal" tabindex="-1" role="dialog"
             aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
