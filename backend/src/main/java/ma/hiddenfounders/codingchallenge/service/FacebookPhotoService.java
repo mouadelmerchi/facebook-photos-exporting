@@ -18,7 +18,7 @@ public interface FacebookPhotoService {
 
    Page<FacebookPhoto> getFacebookPhotos(FacebookPhoto probe, Pageable pageable);
    
-   long FacebookPhotosCount();
+   long facebookPhotosCount();
 
    boolean savePhotoImageToDisc(String realAlbumsPath, FacebookPhoto photo) throws IOException;
 

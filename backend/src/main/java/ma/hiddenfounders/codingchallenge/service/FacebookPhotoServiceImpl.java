@@ -65,7 +65,7 @@ class FacebookPhotoServiceImpl implements FacebookPhotoService {
    }
 
    @Override
-   public long FacebookPhotosCount() {
+   public long facebookPhotosCount() {
       return fbPhotoRepository.count();
    }
 
