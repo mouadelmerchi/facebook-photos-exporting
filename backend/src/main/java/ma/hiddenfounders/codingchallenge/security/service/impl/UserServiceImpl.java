@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.security.service;
+package ma.hiddenfounders.codingchallenge.security.service.impl;
 
 import java.util.Arrays;
 
@@ -13,17 +13,19 @@ import ma.hiddenfounders.codingchallenge.security.entity.AuthorityName;
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.exception.DuplicateUserException;
 import ma.hiddenfounders.codingchallenge.security.exception.InvalidUserInfoException;
-import ma.hiddenfounders.codingchallenge.security.repository.UserRepository;
+import ma.hiddenfounders.codingchallenge.security.repository.IUserRepository;
+import ma.hiddenfounders.codingchallenge.security.service.IAuthorityService;
+import ma.hiddenfounders.codingchallenge.security.service.IUserService;
 import ma.hiddenfounders.codingchallenge.security.util.TimeProvider;
 
 @Service
-class UserServiceImpl implements UserService {
+class UserServiceImpl implements IUserService {
 
    @Autowired
-   private UserRepository userRepository;
+   private IUserRepository userRepository;
 
    @Autowired
-   private AuthorityService authorityService;
+   private IAuthorityService authorityService;
 
    @Autowired
    private PasswordEncoder passwordEncoder;

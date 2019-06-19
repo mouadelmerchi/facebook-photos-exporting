@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
 
 @Repository
-public interface FacebookPhotoRepository extends MongoRepository<FacebookPhoto, String> {
+public interface IFacebookPhotoRepository extends MongoRepository<FacebookPhoto, String> {
 
    FacebookPhoto findByImageKey(String imageKey);
 }

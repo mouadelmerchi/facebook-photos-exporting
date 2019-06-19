@@ -7,7 +7,7 @@ import ma.hiddenfounders.codingchallenge.security.entity.Authority;
 import ma.hiddenfounders.codingchallenge.security.entity.AuthorityName;
 
 @Repository
-public interface AuthorityRepository extends JpaRepository<Authority, Long> {
+public interface IAuthorityRepository extends JpaRepository<Authority, Long> {
 
    Authority findByName(AuthorityName name);
 }

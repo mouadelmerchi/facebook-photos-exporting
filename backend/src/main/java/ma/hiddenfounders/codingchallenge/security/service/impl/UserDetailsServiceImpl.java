@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.security.service;
+package ma.hiddenfounders.codingchallenge.security.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.exception.UserNotEnabledException;
 import ma.hiddenfounders.codingchallenge.security.jwt.JwtUserDetailsFactory;
-import ma.hiddenfounders.codingchallenge.security.repository.UserRepository;
+import ma.hiddenfounders.codingchallenge.security.repository.IUserRepository;
 
 /**
  * Authenticate a user from the database.
@@ -22,7 +22,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
    private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsService.class);
 
    @Autowired
-   private UserRepository userRepository;
+   private IUserRepository userRepository;
 
    @Override
    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

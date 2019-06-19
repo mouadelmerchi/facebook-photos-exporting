@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.service;
+package ma.hiddenfounders.codingchallenge.service.impl;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ImagingOpException;
@@ -26,13 +26,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
 import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
-import ma.hiddenfounders.codingchallenge.repository.FacebookPhotoRepository;
+import ma.hiddenfounders.codingchallenge.repository.IFacebookPhotoRepository;
+import ma.hiddenfounders.codingchallenge.service.IFacebookPhotoService;
 
 @Service
-class FacebookPhotoServiceImpl implements FacebookPhotoService {
+class FacebookPhotoServiceImpl implements IFacebookPhotoService {
 
    @Autowired
-   private FacebookPhotoRepository fbPhotoRepository;
+   private IFacebookPhotoRepository fbPhotoRepository;
 
    @Value("${app.facebook.images.extension}")
    private String facebookImagesExt;

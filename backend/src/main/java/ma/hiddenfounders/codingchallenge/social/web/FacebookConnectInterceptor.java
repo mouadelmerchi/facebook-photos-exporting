@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
 
-import ma.hiddenfounders.codingchallenge.service.FacebookImportService;
+import ma.hiddenfounders.codingchallenge.service.IFacebookImportService;
 
 @Component
 public class FacebookConnectInterceptor implements ConnectInterceptor<Facebook> {
@@ -27,7 +27,7 @@ public class FacebookConnectInterceptor implements ConnectInterceptor<Facebook> 
    private static final String USER_EMAIL_ATT_NAME = "userEmail";
 
    @Autowired
-   FacebookImportService facebookConnectService;
+   IFacebookImportService facebookConnectService;
 
    @Autowired
    private ServletContext context;

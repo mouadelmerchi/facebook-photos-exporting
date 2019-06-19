@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.service;
+package ma.hiddenfounders.codingchallenge.service.impl;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
@@ -17,18 +17,21 @@ import ma.hiddenfounders.codingchallenge.common.util.Utils;
 import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
 import ma.hiddenfounders.codingchallenge.entity.FacebookAlbumReference;
 import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
+import ma.hiddenfounders.codingchallenge.service.IFacebookAlbumService;
+import ma.hiddenfounders.codingchallenge.service.IFacebookImportService;
+import ma.hiddenfounders.codingchallenge.service.IFacebookPhotoService;
 
 @Service
-class FacebookImportServiceImpl implements FacebookImportService {
+class FacebookImportServiceImpl implements IFacebookImportService {
 
    @Autowired
    private Facebook facebook;
 
    @Autowired
-   private FacebookAlbumService fbAlbumService;
+   private IFacebookAlbumService fbAlbumService;
 
    @Autowired
-   private FacebookPhotoService fbPhotoService;
+   private IFacebookPhotoService fbPhotoService;
 
    @Override
    public void importFacebookAlbums(String userEmail, String albumsPath, Integer defaultPageSize, String imagesExt) {

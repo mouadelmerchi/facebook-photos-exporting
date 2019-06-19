@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ma.hiddenfounders.codingchallenge.security.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface IUserRepository extends JpaRepository<User, Long> {
 
    User findByEmailOrUsername(String email, String username);
    

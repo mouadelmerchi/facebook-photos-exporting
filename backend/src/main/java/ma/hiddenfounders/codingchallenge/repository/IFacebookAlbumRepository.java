@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
 
 @Repository
-public interface FacebookAlbumRepository extends MongoRepository<FacebookAlbum, String> {
+public interface IFacebookAlbumRepository extends MongoRepository<FacebookAlbum, String> {
 
    long countByOwner(String email);
 }

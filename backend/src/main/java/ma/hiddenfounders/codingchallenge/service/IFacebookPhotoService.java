@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
 
-public interface FacebookPhotoService {
+public interface IFacebookPhotoService {
 
    FacebookPhoto saveFacebookPhoto(FacebookPhoto photo);
 

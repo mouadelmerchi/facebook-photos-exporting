@@ -4,7 +4,7 @@ import ma.hiddenfounders.codingchallenge.security.entity.User;
 import ma.hiddenfounders.codingchallenge.security.exception.DuplicateUserException;
 import ma.hiddenfounders.codingchallenge.security.exception.InvalidUserInfoException;
 
-public interface UserService {
+public interface IUserService {
 
    User findUserByEmailOrUsername(String email, String username);
 

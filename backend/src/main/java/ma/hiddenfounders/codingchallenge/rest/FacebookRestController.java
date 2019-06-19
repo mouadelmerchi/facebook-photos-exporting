@@ -28,8 +28,8 @@ import ma.hiddenfounders.codingchallenge.dto.PhotosListResponse;
 import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
 import ma.hiddenfounders.codingchallenge.entity.FacebookAlbumReference;
 import ma.hiddenfounders.codingchallenge.entity.FacebookPhoto;
-import ma.hiddenfounders.codingchallenge.service.FacebookAlbumService;
-import ma.hiddenfounders.codingchallenge.service.FacebookPhotoService;
+import ma.hiddenfounders.codingchallenge.service.IFacebookAlbumService;
+import ma.hiddenfounders.codingchallenge.service.IFacebookPhotoService;
 
 @RestController
 @RequestMapping("/api/facebook")
@@ -48,10 +48,10 @@ public class FacebookRestController {
    private Integer photosPageSize;
 
    @Autowired
-   private FacebookAlbumService fbAlbumService;
+   private IFacebookAlbumService fbAlbumService;
 
    @Autowired
-   private FacebookPhotoService fbPhotoService;
+   private IFacebookPhotoService fbPhotoService;
 
    @Autowired
    private ServletContext context;

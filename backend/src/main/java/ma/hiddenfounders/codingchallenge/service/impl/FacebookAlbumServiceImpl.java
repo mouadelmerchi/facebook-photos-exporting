@@ -1,4 +1,4 @@
-package ma.hiddenfounders.codingchallenge.service;
+package ma.hiddenfounders.codingchallenge.service.impl;
 
 import java.util.Optional;
 
@@ -9,13 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ma.hiddenfounders.codingchallenge.entity.FacebookAlbum;
-import ma.hiddenfounders.codingchallenge.repository.FacebookAlbumRepository;
+import ma.hiddenfounders.codingchallenge.repository.IFacebookAlbumRepository;
+import ma.hiddenfounders.codingchallenge.service.IFacebookAlbumService;
 
 @Service
-class FacebookAlbumServiceImpl implements FacebookAlbumService {
+class FacebookAlbumServiceImpl implements IFacebookAlbumService {
 
    @Autowired
-   private FacebookAlbumRepository fbAlbumRepository;
+   private IFacebookAlbumRepository fbAlbumRepository;
 
    @Override
    public long countFacebookAlbumsByOwner(String ownerEmail) {
