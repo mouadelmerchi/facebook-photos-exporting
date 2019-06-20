@@ -18,8 +18,8 @@ datasource:
 spring:
   social:
     facebook:
-      appId: 1969884773225638
-      appSecret: 39eb2c0251a92228b1e49df841e0f2b3
+      appId: <app-id>
+      appSecret: <app-secret>
   session:
     store-type: jdbc
     jdbc: 
@@ -59,7 +59,7 @@ spring:
   datasource: 
     url: jdbc:mysql://localhost:3306/FacebookPhotosSecurityDB
     username: root
-    password: sql@2019#!
+    password: <mysql-password>
     driverClassName: com.mysql.jdbc.Driver
     defaultSchema:
     maxPoolSize: 20
