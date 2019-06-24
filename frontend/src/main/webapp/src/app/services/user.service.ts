@@ -3,12 +3,10 @@ import {
     HttpClient,
     HttpHeaders,
     HttpErrorResponse
-}                                from '@angular/common/http';
+}                                 from '@angular/common/http';
 
-import { Observable }            from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import {
     User,
@@ -24,31 +22,33 @@ export class UserService {
 
     create(user: User): Observable<boolean | {}> {
         return this.http.post<AuthenticationToken>('/auth/user', user) // this.getAuthorizationHeaders()
-            .map(data => {
-                // user created and authenticated automatically
-                let token = data.token;
-                if (token) {
-                     this.storageService.storeCurrentUser(user.email, token);
+			.pipe(
+				map(data => {
+					// user created and authenticated automatically
+					const token = data.token;
+					if (token) {
+						this.storageService.storeCurrentUser(user.email, token);
 
-                    // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
-                }
-            })
-            .catch((err: any) => {
-                let errObj: any;
-                if (err.error instanceof Error) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    errObj = { status: 200, message: { body: 'Client side error occurred' }, error: { reason: 'Client Error', body: err.error.message } };
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong,
-                    errObj = err.error || { status: 500, message: { body: 'System unavailable' }, error: { reason: 'Error', body: 'Server error' } };
-                }
-                throw(errObj);
-            });
+						// return true to indicate successful login
+						return true;
+					} else {
+						// return false to indicate failed login
+						return false;
+					}
+				}), 
+				catchError((err: any) => {
+					let errObj: any;
+					if (err.error instanceof Error) {
+						// A client-side or network error occurred. Handle it accordingly.
+						errObj = { status: 200, message: { body: 'Client side error occurred' }, error: { reason: 'Client Error', body: err.error.message } };
+					} else {
+						// The backend returned an unsuccessful response code.
+						// The response body may contain clues as to what went wrong,
+						errObj = err.error || { status: 500, message: { body: 'System unavailable' }, error: { reason: 'Error', body: 'Server error' } };
+					}
+					return throwError(errObj);
+            	})
+			);
     }
 
     private getAuthorizationHeaders() {

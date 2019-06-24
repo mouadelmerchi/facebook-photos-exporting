@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
 
 import { StorageService,
@@ -12,9 +12,9 @@ import { Photo }             from '../models/index';
     templateUrl: './photos.component.html',
     styleUrls: ['./photos.component.scss']
 })
-export class PhotosComponent implements OnInit {
+export class PhotosComponent implements AfterViewInit {
     
-    @ViewChild('photoModal') public photoModal;
+    @ViewChild('photoModal', {static: false}) public photoModal;
     
     private subscription: any;
     tuple: any;
@@ -27,7 +27,7 @@ export class PhotosComponent implements OnInit {
         private facebookService: FacebookService,
         private route: ActivatedRoute) { }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.subscription = this.route.params.subscribe(params => {
             this.albumId = params['id'];
             this.getPhotos();

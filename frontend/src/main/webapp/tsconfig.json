@@ -14,10 +14,12 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "module": "es2015",
+    "baseUrl": "./"
   },
   "include": [
-      "node_modules/angular-bootstrap-md/**/*.ts", 
-      "src/**/*.ts"
-  ], 
+    "node_modules/angular-bootstrap-md/**/*.ts",
+    "src/**/*.ts"
+  ]
 }
