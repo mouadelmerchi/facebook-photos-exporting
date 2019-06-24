@@ -1,15 +1,15 @@
-import { 
-    Component, 
-    OnInit 
-}                          from '@angular/core';
-import { 
-    Router, 
-    ActivatedRoute 
-}                          from '@angular/router';
-import { 
-    AlertService, 
-    AuthenticationService 
-}                          from '../services/index';
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    Router,
+    ActivatedRoute
+} from '@angular/router';
+import {
+    AlertService,
+    AuthenticationService
+} from '../services/index';
 
 @Component({
     moduleId: module.id,
@@ -18,8 +18,8 @@ import {
 })
 export class LoginComponent implements OnInit {
     model: any = {
-        email: "admin@admin.com",
-        password: "admin"
+        email: 'admin@admin.com',
+        password: 'admin'
     };
     loading = false;
     returnUrl: string;
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
         // reset login status
         this.authenticationService.logout();
-    
+
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                 }
             }, err => {
-                console.log("Status (" + err.status + ") => " + err.error.reason + ": " + err.error.body);
+                console.log(`Status (${err.status}) => ${err.error.reason}: ${err.error.body}`);
                 this.alertService.error(err.message.body);
                 this.loading = false;
             });
