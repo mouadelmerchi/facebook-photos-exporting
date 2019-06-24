@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { StorageService,
-         FacebookService
-}                            from '../services/index';
+import {
+    StorageService,
+    FacebookService
+} from '../services/index';
 
 @Component({
     selector: 'home',
@@ -12,14 +13,14 @@ import { StorageService,
 export class HomeComponent implements OnInit {
     tuple: any;
     userEmail: string;
-    currentPage: number = 1;
-    loading: boolean = false;
+    currentPage = 1;
+    loading = false;
 
     constructor(private storageService: StorageService,
-        private facebookService: FacebookService) { }
+    private facebookService: FacebookService) { }
 
     ngOnInit(): void {
-        this.userEmail = this.storageService.getField("email");
+        this.userEmail = this.storageService.getField('email');
         this.getAlbums();
     }
 
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
                 this.tuple = result;
                 this.loading = false;
             }, err => {
-                console.log("Status (" + err.status + ") => " + err.error);
+                console.log(`Status (${err.status}) => ${err.error}`);
             });
     }
 
