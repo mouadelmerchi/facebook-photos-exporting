@@ -83,4 +83,11 @@ public class UserRestControllerTest {
       this.mvc.perform(get(authUserPath).header("Authorization", "Bearer nsodunsodiuv")).andExpect(status().is2xxSuccessful());
    }
 
+
+   @Test
+   @WithMockUser(roles = "USER")
+   public void testGetUserSuccessfullyWithUserRoleM() throws Exception {
+      // Code Here
+   }
+
 }
