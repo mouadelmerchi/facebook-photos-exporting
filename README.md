@@ -5,7 +5,7 @@
 ## About
 
 This is just a demo for using **Spring boot** with **Spring Security**, **MongoDB/MySQL** and
-**Angular 5**. It consists of an application that lets the user import photos from facebook and 
+**Angular 8**. It consists of an application that lets the user import photos from facebook and 
 store them in a NoSQL database.
 
 The project contains two separate parts:
@@ -111,9 +111,11 @@ datasource:
 
 **Mouad El Merchichi**
 
-## Collaborator 
+## Collaborators 
 
-**Wijdane BOUKAID**
+* **Wijdane BOUKAID**
+* **Abdelkhalek ABRIL**
+* **El Mahdi EL HAJRI**
 
 ## Copyright and license
 
