@@ -54,4 +54,10 @@ public class GreetingRestControllerTest {
       this.mvc.perform(get(RESOURCE_PATH)).andExpect(status().is2xxSuccessful());
    }
 
+    @Test
+   @WithMockUser(roles = "ADMIN")
+   public void testShouldGetOkWithAdminRoleM() throws Exception {
+      this.mvc.perform(get(RESOURCE_PATH)).andExpect(status().is2xxSuccessful());
+   }
+
 }
