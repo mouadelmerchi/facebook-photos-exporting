@@ -111,6 +111,10 @@ datasource:
 
 **Mouad El Merchichi**
 
+## Collaborator 
+
+**Wijdane BOUKAID**
+
 ## Copyright and license
 
 The code is released under the [MIT license](LICENSE?raw=true).
