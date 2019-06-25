@@ -130,6 +130,7 @@ public class SecurityRestControllerTest {
       this.mvc.perform(get(authRefresh)).andExpect(status().is2xxSuccessful());
    }
 
+   // Testing if the user is nonymousUser
    @Test
    @WithAnonymousUser
    public void testShouldGetUnauthorizedWithAnonymousUser() throws Exception {
