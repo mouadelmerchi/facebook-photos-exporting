@@ -1,30 +1,25 @@
-import { Component, AfterViewInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute }    from '@angular/router';
+import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { StorageService,
-         FacebookService
-}                            from '../services/index';
-
-import { Photo }             from '../models/index';
+import { FacebookService } from '../services/index';
 
 @Component({
-    selector: 'photos',
+    selector: 'app-photos',
     templateUrl: './photos.component.html',
     styleUrls: ['./photos.component.scss']
 })
-export class PhotosComponent implements AfterViewInit {
-    
-    @ViewChild('photoModal', {static: false}) public photoModal;
-    
+export class PhotosComponent implements AfterViewInit, OnDestroy {
+
+    @ViewChild('photoModal', {static: false}) public photoModal: { show: () => void; };
+
     private subscription: any;
     tuple: any;
     albumId: string;
-    currentPage: number = 1;
-    loading: boolean = false;
+    currentPage = 1;
+    loading = false;
     photoUri: string;
 
-    constructor(private storageService: StorageService,
-        private facebookService: FacebookService,
+    constructor(private facebookService: FacebookService,
         private route: ActivatedRoute) { }
 
     ngAfterViewInit(): void {
@@ -42,7 +37,7 @@ export class PhotosComponent implements AfterViewInit {
                 console.log(this.tuple.photos[0]);
                 this.loading = false;
             }, err => {
-                console.log("Status (" + err.status + ") => " + err.error);
+                console.log(`Status (${err.status}) => ${err.error}`);
             });
     }
 

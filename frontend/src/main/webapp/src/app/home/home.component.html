@@ -43,7 +43,7 @@
       <div class="row">
          <div *ngFor="let album of tuple?.albums" class="card">
             <a [routerLink]="['/album', album.id]">
-               <photo-details [photoUri]="album.coverPhotoUri"></photo-details>
+               <app-photo-details [photoUri]="album.coverPhotoUri"></app-photo-details>
             </a>
             <p class="card-text">
                {{album.name}}

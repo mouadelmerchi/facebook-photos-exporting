@@ -17,13 +17,13 @@ export class StorageService {
 
     getField(field: string): string {
         let value: string = null;
-        let currentUser = this.getCurrentUser();
+        const currentUser = this.getCurrentUser();
         if (currentUser) {
             switch (field.toLowerCase()) {
-                case "email":
+                case 'email':
                     value = currentUser.email;
                     break;
-                case "token":
+                case 'token':
                     value = currentUser.token;
                     break;
             }
@@ -33,7 +33,7 @@ export class StorageService {
 
     // Does nothing if currentUser doesn't exist
     updateToken(refreshedToken: string): void {
-        let currentUser = JSON.parse(this.getCurrentUser());
+        const currentUser = JSON.parse(this.getCurrentUser());
         if (currentUser) {
             this.storeCurrentUser(currentUser.email, refreshedToken);
         }

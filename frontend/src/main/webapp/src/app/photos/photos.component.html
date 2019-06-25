@@ -12,7 +12,7 @@
       <div class="row">
          <div *ngFor="let photo of tuple?.photos" class="card">
             <a data-toggle="modal" data-target="#photoModal" (click)="showPhoto(photo.photoUri)" mdbRippleRadius>
-               <photo-details [photoUri]="photo.photoThumbUri"></photo-details>
+               <app-photo-details [photoUri]="photo.photoThumbUri"></app-photo-details>
             </a>
             <p class="card-text">{{photo.name}}</p>
          </div>
