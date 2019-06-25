@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import {
-    StorageService,
-    FacebookService
-} from '../services/index';
+import { StorageService, FacebookService } from '../services/index';
 
 @Component({
-    selector: 'home',
+    selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })

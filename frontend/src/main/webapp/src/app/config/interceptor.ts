@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-    HttpInterceptor,
-    HttpEvent,
-    HttpHandler,
-    HttpRequest,
-    HttpResponse,
-    HttpErrorResponse
-} from '@angular/common/http';
+import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -43,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
                         console.log(err.error);
 
                         if (err.status === 401) {
-                            console.log('Status (' + err.status + ') => ' + err.error.reason + ': ' + err.error.body);
+                            console.log(`Status (${err.status}) => ${err.error.reason}: ${err.error.body}`);
                             this.router.navigate(['/login']);
                             //                        authService.refreshToken()
                             //                            .subscribe(result => {

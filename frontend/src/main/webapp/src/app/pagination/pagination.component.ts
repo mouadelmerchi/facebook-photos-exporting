@@ -26,7 +26,7 @@ export class PaginationComponent implements OnInit {
     }
 
     onPage(n: number): void {
-        if (n != this.currentPage) {
+        if (n !== this.currentPage) {
             this.goPage.emit(n);
         }
     }
@@ -46,15 +46,17 @@ export class PaginationComponent implements OnInit {
         const pages: number[] = [];
         pages.push(p);
         const times = pagesToShow - 1;
+        let min: number;
+        let max: number;
         for (let i = 0; i < times; i++) {
             if (pages.length < pagesToShow) {
-                let min = Math.min.apply(null, pages);
+                min = Math.min.apply(null, pages);
                 if (min > 1) {
                     pages.push(min - 1);
                 }
             }
             if (pages.length < pagesToShow) {
-                let max = Math.max.apply(null, pages);
+                max = Math.max.apply(null, pages);
                 if (max < c) {
                     pages.push(max + 1);
                 }
